@@ -160,6 +160,31 @@
     ><br />
     to prevent actions that would destroy links between tables.(MySQL stops you
     from deleting or updating data that other tables still depend on.)
+    <br /><br />
+    <strong style="color: red">Cascading for Foreign key</strong><br />
+
+    <h3>
+      On Delete Cascade : When we create a foreign key using (Delete Cascade)
+      this option, it deletes the referencing rows in the child table when the
+      referenced row is deleted in the parent table which has a primary key.
+    </h3>
+    <br />
+    <h3>
+      On Update Cascade : When we create a foreign key using UPDATE CASCADE the
+      referencing rows are updated in the child table when the referenced row is
+      updated in the parent table which has a primary key.
+    </h3>
+    <br />
+    <h4>
+      <strong style="color: blue">ON DELETE / ON UPDATE Actions</strong><br />
+      CREATE TABLE temp ( cust_id INT, FOREIGN KEY (cust_id) REFERENCES
+      customer(id) ON DELETE CASCADE ON UPDATE CASCADE );
+      <br />
+    </h4>
+    <h3>
+      this cancade delete and update means when we update or delete parent table
+      it will be reflected in child table
+    </h3>
     <br />
     CREATE TABLE customer ( id INT PRIMARY KEY, name VARCHAR(50) );<br />
     <strong> two way to define foreign key</strong>
@@ -222,11 +247,51 @@
       UPDATE students SET grade = "B" WHERE marks between 60 and 69;
       <br />
       <strong>Delete Data</strong>
-      DELETE FROM students WHERE name = 'Ravi';
+      DELETE FROM students WHERE name = 'Ravi';<br />
+    </p>
+    <strong>ALTER (to change the schema / table structure)</strong><br />
+    <h3>
+      ADD Column - ALTER TABLE TABE_NAME ADD COLUMN COLUMN_NAME DATA_TYPE
+      CONSTRAINT <br />
+      Add Multiple COlumn<br />
+      ALTER TABLE employees ADD COLUMN dept VARCHAR(50), ADD COLUMN city
+      VARCHAR(50);
+    </h3>
+    <h3 style="color: red;">
+      Add foreign key to existing table<br />
+      ALTER TABLE orders<br />
+      ADD CONSTRAINT fk_customer<br />
+      FOREIGN KEY (customer_id) REFERENCES customers(id);<br />
+    </h3>
+    <br />
+    <h3>Drop Column - ALTER TABLE TABLE_NAME DROP COLUMN COLUMN_NAME</h3>
+    <br />
+    <h3>
+      Modify Column - ALTER TABLE TABLE_NAME MODIFY COLUMN_NAME DATA_TYPE
+      CONSTRAINT <br />
+      Modify / change datatype/ constraint<br />
+      ALTER TABLE employees MODIFY salary DECIMAL(10,2);
+    </h3>
+    <br />
+    <h3>
+      change/Rename Column - ALTER TABLE TABLE_NAME CHANGE COLUMN OLD_COLUMN_NAME
+      NEW_COLUMN_NAME DATA_TYPE CONSTRAINT
+    </h3>
+    <br />
+    <br>
+    <h3>Rename Table - RENAME TABLE TABLE_NAME TO NEW_TABLE_NAME</h3>
+    <br />
+    <h3>Drop Table - DROP TABLE TABLE_NAME</h3>
+    <br />
+    <h3>
+      Truncate Table - TRUNCATE TABLE TABLE_NAME<br />
+      Truncate table (delete only data, keep structure)<br />
+      TRUNCATE TABLE employees;
+    </h3>
+    <br />
 
-      <br />
-      <br />
-
+    <br />
+    <p>
       show databases; - used to show all databases in MySQL<br />
       show tables; - used to show all tables in MySQL <br /><br />
 
@@ -321,8 +386,8 @@
     <p>Build small projects (e.g. Student Management System)</p>
     <br /><br />
     <strong style="color: red"
-      >#foreign key execution - we can see er diagram in workbench. go to database - select
-      reverse engineer - next next upto complete</strong
+      >#foreign key execution - we can see er diagram in workbench. go to
+      database - select reverse engineer - next next upto complete</strong
     >
 
     <strong>Start Small Task for Practise</strong>
