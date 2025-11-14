@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SQL_Learning</title>
+  </head>
+  <body>
+    <p>
+      <strong>Database</strong>
+      Database is collection of data in a format that can be easily accessed
+      (Digital)
+      <br />
+      A database is an organized collection of data stored electronically in a
+      computer. <br />It helps you store, manage, and retrieve information
+      easily. <br /><br />
+      A software application used to manage our DB is called
+      <strong>DBMS (Database Management System)</strong>
+      <br />
+    </p>
+    <strong>Types of Database</strong><br />
+    <ul>
+      <li>
+        Relational Database (RDBMS) - here Data stored in tables. ex - MySQL,
+        Oracle, DB2, SQL Server, MS Access, postgresSQL, etc <br />
+        Data is stored in tables (rows & columns).<br />Tables are connected
+        using relations (keys).<br />
+        Uses SQL (Structured Query Language).
+      </li>
+      <br />
+      <li>
+        NoSQL Database (Non-Relational Database) - here data not stored in
+        tables. ex - MongoDB, CouchDB, Cassandra, etc pair <br />
+        Non-relational (no fixed tables or relations).<br />
+        Flexible structure — JSON, key-value, document, etc.<br />
+        Used for big data, real-time apps, or unstructured data.<br />
+      </li>
+    </ul>
+    <strong>3. What is SQL?</strong>
+    <br />
+    we speak 2 ways: SQL as Structured Query Language or SEQUEL as structured
+    English Query Language<br />
+    <p>
+      SQL (Structured Query Language) is a language used to communicate/interact
+      with relational databases.<br />
+      SQL is a standard language for accessing and manipulating data in
+      relational databases.<br />
+      SQL commands are used to create, retrieve, update, and delete data in a
+      database.<br />
+    </p>
+
+    <strong>What is Data?</strong><br />
+    Data means any information that you store and use later.<br />
+    Example: names, phone numbers, marks, prices, etc.<br /><br />
+    <strong>What is a Table?</strong><br />
+    A table is the basic structure inside a database — like a sheet in Excel.<br />
+    It has:<br />
+
+    Rows → represent each record (like one student)<br /><br />
+
+    Columns → represent the type of data (name, age, city)<br /><br />
+
+    <strong> Installation</strong>
+    <br />
+    <strong
+      >1. Download and Install MySQL -
+      https://dev.mysql.com/downloads/installer</strong
+    ><br />
+    <strong
+      >2. Download and Install MySQL Workbench -
+      https://dev.mysql.com/downloads/workbench</strong
+    ><br />
+    Now we can start wirk with sql database using mysql workbench.
+    <br />
+
+    <strong>Common SQL Commands:</strong><br />
+    <p>| Command | Use |</p>
+    <p>| -------- | ---------------------------- |</p>
+    <p>| CREATE | create new table or database |</p>
+    <p>| INSERT | add new data |</p>
+    <p>| SELECT | read data |</p>
+    <p>| UPDATE | modify data |</p>
+    <p>| DELETE | remove data |</p>
+    <br /><br />
+    <p>| DROP | remove table or database |</p>
+    <p>| TRUNCATE | remove all data from table |</p>
+    <p>| ALTER | modify table structure |</p>
+    <p>| RENAME | change table or database name |</p>
+    <p>| GRANT | give permission to user |</p>
+    <p>| REVOKE | remove permission from user |</p>
+    <p>| COMMIT | save changes |</p>
+    <p>| ROLLBACK | undo changes |</p>
+    <p>| SAVEPOINT | create checkpoint |</p>
+    <p>| RESTORE | restore checkpoint |</p>
+    <p>| CREATE INDEX | create index on table |</p>
+    <p>| DROP INDEX | remove index from table |</p>
+    <p>| CREATE VIEW | create view on table |</p>
+    <p>| DROP VIEW | remove view from table |</p>
+    <p>| CREATE PROCEDURE | create stored procedure |</p>
+    <p>| DROP PROCEDURE | remove stored procedure |</p>
+    <p>| CREATE FUNCTION | create function |</p>
+    <p>| DROP FUNCTION | remove function |</p>
+    <p>| CREATE TRIGGER | create trigger on table |</p>
+    <p>| DROP TRIGGER | remove trigger from table |</p>
+    <p>| CREATE DOMAIN | create domain |</p>
+    <p>| DROP DOMAIN | remove domain |</p>
+    <p>| CREATE ROLE | create role |</p>
+    <p>| DROP ROLE | remove role |</p>
+    <p>| CREATE USER | create user |</p>
+    <p>| DROP USER | remove user |</p>
+    <p>| CREATE TABLESPACE | create tablespace |</p>
+    <p>| DROP TABLESPACE | remove tablespace |</p>
+    <p>| CREATE DATABASE | create database |</p>
+    <p>| DROP DATABASE | remove database |</p>
+    <p>| CREATE SCHEMA | create schema |</p>
+    <p>| DROP SCHEMA | remove schema |</p>
+    <br />
+
+    <br />
+    <strong style="color: blue">Types of SQL Commands</strong> <br />
+    <p>
+      1. DDL (Data Definition Language) - CREATE, ALTER, DROP, TRUNCATE, RENAME
+    </p>
+    <p>2. DML (Data Manipulation Language) - INSERT, UPDATE, DELETE</p>
+    <p>3. DCL (Data Control Language) - GRANT, REVOKE permission to users</p>
+    <p>
+      4. TCL (Transaction Control Language) - start transaction, COMMIT,
+      ROLLBACK
+    </p>
+    <p>5. DQL (Data Query Language) - SELECT</p>
+    <p>
+      6. DTD (Data Type Definition Language) - CREATE DOMAIN, CREATE TABLESPACE
+    </p>
+    <br />
+
+    <strong
+      ><span style="color: red">Primary Key</span> - It is a column (or set of
+      columns) in a table that uniquely identifies each row. <br />
+      (a unique id) There is only 1 PK & it should be NOT null.</strong
+    ><br /><br />
+    <p>
+      #here we can use second way to define primary key as well as used
+      combination of 2 fild to create primary key. here combination id and name
+      define primary key like 1bhavesh 1raj
+    </p>
+    <p>create table temp2(</p>
+    <p>id int,</p>
+    <p>name varchar(100),</p>
+    <p>age int,</p>
+    <p>city varchar(20),</p>
+    <p>primary key (id, name)</p>
+    <p>);</p>
+    <br /><br />
+
+    <strong
+      ><span style="color: red">Foreign Key </span>- A foreign key is a column
+      (or set of columns) in a table that refers to the primary key in another
+      table. FKs can have duplicate & null values.<br />
+      There can be multiple FKs.</strong
+    ><br />
+    to prevent actions that would destroy links between tables.(MySQL stops you
+    from deleting or updating data that other tables still depend on.)
+    <br />
+    CREATE TABLE customer ( id INT PRIMARY KEY, name VARCHAR(50) );<br />
+    <strong> two way to define foreign key</strong>
+    CREATE TABLE temp ( cust_id INT REFERENCES customer(id) );<br />
+    create table temp(cust_id int, foreign key (cust_id) references customer
+    (id))
+    <br /><br />
+    <strong>ON DELETE / ON UPDATE Actions</strong><br />
+    CREATE TABLE temp ( cust_id INT, FOREIGN KEY (cust_id) REFERENCES
+    customer(id) ON DELETE CASCADE ON UPDATE CASCADE );
+    <br />
+    <p>| Option | Meaning |</p>
+    <p>
+      | -------------------- |
+      ------------------------------------------------------- |
+    </p>
+    <p>
+      | `ON DELETE CASCADE` | If a customer is deleted → delete all related temp
+      rows |
+    </p>
+    <p>
+      | `ON DELETE SET NULL` | If customer is deleted → set `cust_id = NULL` |
+    </p>
+    <p>| `ON DELETE RESTRICT` | Prevent deletion if linked rows exist |</p>
+    <p>
+      | `ON UPDATE CASCADE` | If customer ID changes → update it in temp table
+      too |
+    </p>
+    <p></p>
+    <br />
+    <br />
+    <strong>4. Example (MySQL / SQL Syntax)</strong>
+    <p>
+      <strong>1. Create a Database</strong> <br />
+      CREATE DATABASE mydatabase;<br />
+      CREATE DATABASE if not exists mydatabase;<br />
+
+      DROP DATABASE mydatabase;
+      <br />
+      DROP DATABASE if exists mydatabase;
+      <br /><br />
+
+      <strong>Create a Table</strong>
+      CREATE TABLE students ( id INT PRIMARY KEY AUTO_INCREMENT, name
+      VARCHAR(100), age INT, city VARCHAR(50) );<br />
+
+      CREATE TABLE if not exists students ( id INT PRIMARY KEY AUTO_INCREMENT,
+      name, age INT, city VARCHAR(50) );<br /><br />
+
+      <strong>Insert Data</strong>
+      INSERT INTO students (name, age, city) VALUES ('Ravi', 23,
+      'Ahmedabad');<br />
+      <strong>Read Data</strong>
+      SELECT * FROM students;
+      <br />
+      <strong>Update Data</strong>
+      UPDATE students SET age = 24 WHERE name = 'Ravi';<br />
+      UPDATE students SET age = 24 WHERE name = 'Ravi' AND city =
+      'Ahmedabad';<br />
+      UPDATE students SET grade = "B" WHERE marks between 60 and 69;
+      <br />
+      <strong>Delete Data</strong>
+      DELETE FROM students WHERE name = 'Ravi';
+
+      <br />
+      <br />
+
+      show databases; - used to show all databases in MySQL<br />
+      show tables; - used to show all tables in MySQL <br /><br />
+
+      <strong>5. Basic Database Structure</strong><br />
+      A database has:<br />
+
+      Tables → store data (like Excel sheets)<br />
+
+      Columns → define what type of data (Name, Age, City)<br />
+
+      Rows → each record or entry<br />
+
+      Primary Key → unique identifier (like ID)<br />
+
+      Foreign Key → link between tables<br />
+      <br />
+    </p>
+    <strong>6. Important Concepts to Learn Next</strong>
+    <strong>🧱 Basic Level</strong>
+    <p>What is Data, Table, Row, Column</p>
+    <p></p>
+    <p>What is RDBMS</p>
+    <p></p>
+    <p>SQL basics: SELECT, INSERT, UPDATE, DELETE</p>
+    <p></p>
+    <p>Data types (INT, VARCHAR, DATE, etc.)</p>
+    <p></p>
+    <p>Primary Key, Foreign Key</p>
+    <p></p>
+    <p>Filtering with WHERE</p>
+    <p></p>
+    <p>Sorting with ORDER BY</p>
+    <p></p>
+    <p>Limiting results with LIMIT</p>
+    <p></p>
+    <p>Grouping with GROUP BY</p>
+    <br /><br />
+
+    <strong>Intermediate Level</strong>
+    <p>Joins (INNER JOIN, LEFT JOIN, etc.)</p>
+    <p></p>
+    <p>Aggregation (COUNT, SUM, AVG, GROUP BY)</p>
+    <p></p>
+    <p>Subqueries</p>
+    <p></p>
+    <p>
+      Constraints - SQL constraints are used to specify rules for the data in a
+      table. <br />
+      (NOT NULL -columns cannot have a null value ,<br />
+      UNIQUE - all values in column are different ,<br />
+      PRIMARY KEY - makes a column unique & not null but used only for one)<br />
+      FOREIGN KEY - link between tables. prevent actions that would destroy
+      links between tables.<br />
+      DEFAULT - set a default value for a column if no value is provided<br />
+      CHECK - check if a value is valid. it can limit the values in a column.<br />
+      <br />
+      example for default value and check <br />
+      <strong style="color: rebeccapurple"
+        >create table city (id int primary key, city varchar(50),name
+        varchar(100) default "bhavesh", age int, constraint age_check check(age
+        >= 18 and city="surat"));</strong
+      >
+      <br />
+    </p>
+
+    <p></p>
+    <p>Indexes</p>
+    <p></p>
+    <p>Views</p>
+    <br /><br />
+
+    <strong>Advanced Level</strong>
+    <p>Stored Procedures</p>
+    <p></p>
+    <p>Triggers</p>
+    <p></p>
+    <p>Transactions</p>
+    <p></p>
+    <p>Database Normalization</p>
+    <p></p>
+    <p>Backup and Restore</p>
+    <p></p>
+    <p>Performance Optimization</p>
+    <br /><br />
+
+    <strong> Practical Side</strong>
+
+    <p>Install and use MySQL / PostgreSQL / SQLite</p>
+    <p></p>
+    <p>Connect with code (Python, Java, Kotlin, Node.js)</p>
+    <p></p>
+    <p>Build small projects (e.g. Student Management System)</p>
+    <br /><br />
+    <strong style="color: red"
+      >#foreign key execution - we can see er diagram in workbench. go to database - select
+      reverse engineer - next next upto complete</strong
+    >
+
+    <strong>Start Small Task for Practise</strong>
+    1. Create a database and table. write this query in MySQL Workbench<br />
+    <strong>create database mydatabase;</strong><br />
+    this database show inside Schemas tab in MySQL Workbench.<br /><br />
+
+    also in work bech we can write multiple query at a time. but we need to
+    select that query which we want execute.<br />after select query and press
+    execute button its execute only selected query<br />
+
+    2. we can delete database using drop database mydatabase;<br /><br />
+
+    <strong>
+      there are one shortcut to set all query execute in that data base command
+      is
+      <span style="color: red"> USE mydatabase; </span> - using this command all
+      execute query apply in that database</strong
+    ><br /><br />
+
+    <strong> 3. create table :</strong> <br /><br />
+    CREATE TABLE TABLE_NAME (column_name1 datatype constraint, column_name2
+    datatype constraint, column_name3 datatype constraint);
+    <br /><br />
+    CREATE TABLE student ( id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(100),
+    age INT NOT NULL );<br />
+    <br />
+    <br />
+    <strong>Insert Data</strong>
+    <br />
+    INSERT INTO student values(1, 'Ravi', 23);<br /><br />
+
+    insert into table_name (column1, column2, column3) values (value1, value2,
+    value3);<br /><br />
+
+    we can insert multiple records at a time.<br />
+    INSERT INTO student (name, age) values ('Ravi', 23), ('Sagar', 21), ('Raj',
+    20);<br /><br />
+
+    see records in table <br />
+    select * from student;<br /><br />
+
+    <strong>
+      SQL Datatypes : they define the type of value that can be stored in a
+      column.</strong
+    >
+    <br />
+    <strong>1. Numeric Data Types</strong>
+    <p>| Data Type | Description | Example |</p>
+    <p>
+      | -------------- | ------------------------------------- |
+      ----------------------- |
+    </p>
+    <p>| `INT` | Whole number (integer) | 10 |</p>
+    <p>| `SMALLINT` | Small integer | 32000 |</p>
+    <p>| `BIGINT` | Very large integer | 9876543210 |</p>
+    <p>
+      | `DECIMAL(p,s)` | Fixed-point number (precision, scale) | `DECIMAL(5,2)`
+      → 123.45 |
+    </p>
+    <p>| `NUMERIC(p,s)` | Same as DECIMAL | 123.45 |</p>
+    <p>| `FLOAT` | Approximate floating-point number | 3.14159 |</p>
+    <p>| `DOUBLE` | Double-precision floating-point number | 3.14159 |</p>
+    <p>| `REAL` | Less precision float | 2.5 |</p>
+    <br /><br />
+
+    <strong>2. Character/String Data Types</strong><br />
+    <p>| Data Type | Description | Example |</p>
+    <p>
+      | ------------ | --------------------------------- |
+      ---------------------------- |
+    </p>
+    <p>
+      | `CHAR(n)` | Fixed-length string (pads spaces) | 'ABC' → stored as `'ABC
+      '` |
+    </p>
+    <p>| `VARCHAR(n)` | Variable-length string | 'ABC' |</p>
+    <p>| `TEXT` | Very long text | 'This is a paragraph...' |</p>
+    <p></p>
+    <br /><br />
+
+    <strong>3. Date and Time Data Types</strong><br />
+    <p>| Data Type | Description | Example |</p>
+    <p>| ----------- | -------------------------- | --------------------- |</p>
+    <p>| `DATE` | Stores date only | `2025-11-13` |</p>
+    <p>| `TIME` | Stores time only | `14:30:00` |</p>
+    <p>| `DATETIME` | Date + time | `2025-11-13 14:30:00` |</p>
+    <p>| `TIMESTAMP` | Date + time (auto updated) | `2025-11-13 14:30:00` |</p>
+    <p>| `YEAR` | Year only | `2025` |</p>
+    <p></p>
+    <br /><br />
+
+    <strong>4. Boolean Data Type</strong>
+    <br />
+    <p>| Data Type | Description | Example |</p>
+    <p>| --------- | ------------- | --------------- |</p>
+    <p>| `BOOLEAN` | True or False | `TRUE`, `FALSE` |</p>
+    <p></p>
+    <br /><br />
+
+    <strong>5. Binary Data Types</strong><br />
+    <p>| Data Type | Description | Example |</p>
+    <p>
+      | -------------- | ----------------------------------- | ------------ |
+    </p>
+    <p>| `BINARY(n)` | Fixed-length binary data | 10101010 |</p>
+    <p>| `VARBINARY(n)` | Variable-length binary data | 1101 |</p>
+    <p>| `BLOB` | Binary Large Object (images, files) | (image data) |</p>
+    <p>| `BIT` | can store x-bit values. x can range from 1 to 64 |</p>
+    <p></p>
+    <br /><br />
+
+    <strong>6. Miscellaneous / Advanced Types</strong>
+    <br />
+    <p>| Data Type | Description |</p>
+    <p>
+      | ---------- |
+      ----------------------------------------------------------------------- |
+    </p>
+    <p>
+      | `ENUM` | A predefined list of possible values (e.g.,
+      `'small','medium','large'`) |
+    </p>
+    <p>| `SET` | Multiple choice list of values |</p>
+    <p>| `JSON` | Stores JSON data |</p>
+    <p>| `XML` | Stores XML data |</p>
+    <p>| `UUID` | Universally Unique Identifier |</p>
+    <p>| `GEOMETRY` | Spatial data (location coordinates) |</p>
+    <p></p>
+    <br /><br />
+
+    <br />
+
+    <strong>SQL Datatypes - signed and unsigned</strong><br /><br />
+    this is another important SQL concept, especially when dealing with<span
+      style="color: red"
+    >
+      numeric data types </span
+    >like INT, SMALLINT, BIGINT, TINYINT etc.<br />
+    In SQL (especially MySQL), signed and unsigned define whether a numeric
+    column can store negative<br /><br />
+    TINYINT UNSIGNED (0 to 255) <br />
+    TINYINT SIGNED (-128 to 127)<br />
+
+    INT SIGNED (-2147483648 to 2147483647)<br />
+    INT UNSIGNED (0 to 4294967295)<br />
+
+    <br />
+    <strong
+      >You need negative numbers (like temperature, profit/loss) -
+      SIGNED</strong
+    >
+    <br />
+    <strong
+      >You only store positive values (like age, price, quantity, ID, quantity,
+      weight) - UNSIGNED</strong
+    >
+    <br />
+    <br />
+
+    <p><strong style="color: blue">| Type | Meaning | Example |</strong></p>
+    <p>
+      | ------------ | --------------------------------------------------------
+      | --------------- |
+    </p>
+    <p>
+      | **SIGNED** | Can store both **positive and negative** numbers | -100, 0,
+      +100 |
+    </p>
+    <p>
+      | **UNSIGNED** | Can store **only positive** numbers (no negative values)
+      | 0, 10, 500, 999 |
+    </p>
+    <p></p>
+
+    <br />
+    <strong> difference between char and varchar: </strong>
+    <p>| Feature | `CHAR(n)` | `VARCHAR(n)` |</p>
+    <p>
+      | ---------------------- |
+      --------------------------------------------------------------- |
+      -------------------------------------------------------- |
+    </p>
+    <p>| **Full form** | Character | Variable Character |</p>
+    <p>| **Storage Type** | Fixed-length | Variable-length |</p>
+    <p>
+      | **Storage Behavior** | Always reserves `n` characters (pads with spaces
+      if needed) | Stores only the actual number of characters used |
+    </p>
+    <p>
+      | **Performance** | Slightly faster (fixed size) | Slightly slower
+      (variable size) |
+    </p>
+    <p>
+      | **Use Case** | When data length is constant (e.g., country codes, PIN,
+      gender) | When data length varies (e.g., names, emails, addresses) |
+    </p>
+    <p>
+      | **Example (n = 10)** | `'abc'` → stored as `'abc_______'` (7 spaces) |
+      `'abc'` → stored as `'abc'` (3 chars only) |
+    </p>
+    <p>
+      | **Storage Space Used** | Always uses `n` bytes | Uses length of data + 1
+      or 2 bytes overhead |
+    </p>
+    <p>
+      | **Trailing Spaces** | Padded automatically (and usually ignored in
+      comparisons) | Not padded automatically |
+    </p>
+    <p></p>
+    <br />
+    <strong>sample database and learn</strong><br />
+
+    <p>create database college;</p>
+    <p>use college;</p>
+    <p>
+      create table student (rollno int primary key, name varchar(50),marks int
+      not null,grade varchar(1),city varchar(20));
+    </p>
+    <p>
+      insert into student (rollno, name, marks,grade,city) values
+      (101,"anil",78,"C","pune"),(102,"bhk",93,"A","mumbai"),(103,"chetan",85,"B","mumbai"),(104,"dhruv",96,"F","delhi");
+    </p>
+    <p></p>
+    <p>select rollno, name from student;</p>
+    <br />
+
+    <strong
+      >distinct - this keyword is used to remove duplicates. means its return
+      unique values</strong
+    ><br />
+    <p>select distinct city from student;</p>
+    <p>select distinct city, grade from student;</p>
+
+    <br />
+
+    <strong>Where Clause</strong>
+    <p>select * from student where marks+10 >100;</p>
+    <p>select * from student where marks between 80 and 90;</p>
+    select * from student where city in ("delhi","mumbai");<br />
+    <p>select * from student where city not in ("delhi","mumbai");</p>
+    <p>select rollno, name from student where city = "mumbai";</p>
+    <p>select rollno, name from student where marks > 90;</p>
+    <p>
+      select rollno, name from student where city = "mumbai" and marks > 90;
+    </p>
+    <p>select rollno, name from student where city = "mumbai" or marks > 90;</p>
+
+    <strong>Clauses</strong>
+    A clause is a keyword used inside an SQL query to perform a specific task.
+    <br />
+    <strong>List of Main SQL Clauses</strong><br />
+
+    <strong>SELECT Clause</strong> <br />
+    Used to choose the columns you want. <br />
+    &nbsp; &ensp; &emsp; SELECT name, age FROM employee;<br />
+    Get all columns:<br />
+    &nbsp; &ensp; &emsp; SELECT * FROM employee;<br />
+
+    <strong>FROM Clause</strong> <br />
+    Tells SQL which table to read data from.<br />
+    &nbsp; &ensp; &emsp; SELECT * FROM customers;
+    <br /><br />
+
+    <strong>WHERE Clause</strong> <br />
+    Used to apply conditions (filter data).<br />
+    &nbsp; &ensp; &emsp; SELECT * FROM customers WHERE address = 'Park Lane
+    38';<br />
+    &nbsp; &ensp; &emsp; SELECT * FROM employee WHERE age > 25;
+    <br /><br />
+
+    &nbsp; &ensp; &emsp; Operators you can use:<br />
+
+    &nbsp; &ensp; &emsp; =, !=<br />
+
+    &nbsp; &ensp; &emsp; >, <, >=, <=<br />
+
+    &nbsp; &ensp; &emsp; BETWEEN <br />
+
+    &nbsp; &ensp; &emsp; LIKE<br />
+
+    &nbsp; &ensp; &emsp; IN<br />
+
+    &nbsp; &ensp; &emsp; IS NULL<br />
+    &nbsp; &ensp; &emsp; IS NOT NULL<br />
+    &nbsp; &ensp; &emsp; AND<br />
+    &nbsp; &ensp; &emsp; OR<br />
+    &nbsp; &ensp; &emsp; NOT<br />
+    &nbsp; &ensp; &emsp; SELECT * FROM employee WHERE name LIKE 'A%';
+
+    <br /><br />
+
+    <strong>ORDER BY Clause</strong> <br />
+    &nbsp; &ensp; &emsp; Used to sort data. by default it is ascending<br />
+    &nbsp; &ensp; &emsp; SELECT * FROM employee ORDER BY name;
+    <br />
+    &nbsp; &ensp; &emsp; SELECT * FROM employee ORDER BY age ASC;;
+    <br />
+    &nbsp; &ensp; &emsp; SELECT * FROM employee ORDER BY name DESC;
+    <br />
+    &nbsp; &ensp; &emsp; select * from employee order by age desc, name asc
+    limit 3;
+    <br />
+    <strong
+      >multi-level Sorting: Sort students by marks highest → lowest. If two
+      students have the same marks, then sort them by name A → Z. This is called
+      multi-level sorting.</strong
+    ><br />
+    <br /><br />
+
+    <strong>GROUP BY Clause</strong> <br />
+    &nbsp; &ensp; &emsp; Used to group rows by one or more columns. Used to
+    group rows that have the same values.<br />
+    &nbsp; &ensp; &emsp; SELECT * FROM employee GROUP BY age;
+    <br />
+    &nbsp; &ensp; &emsp; SELECT * FROM employee GROUP BY age, name;
+    <br />
+    &nbsp; &ensp; &emsp; SELECT department, COUNT(*) FROM employee GROUP BY
+    department;
+    <br />
+    <br />
+
+    <strong>HAVING Clause</strong> <br />
+    &nbsp; &ensp; &emsp; Used to filter groups created by the GROUP BY
+    clause.<br />
+
+    &nbsp; &ensp; &emsp; Used to apply conditions after grouping. (WHERE cannot
+    be used after GROUP BY)<br />
+
+    &nbsp; &ensp; &emsp; SELECT department, COUNT(*) FROM employee GROUP BY
+    department;<br />
+    &nbsp; &ensp; &emsp; SELECT department, COUNT(*) FROM employee GROUP BY
+    department HAVING COUNT(*) > 1;<br /><br />
+    &nbsp; &ensp; &emsp;Get departments with more than 5 employees:<br />
+    &nbsp; &ensp; &emsp;SELECT department, COUNT(*)<br />
+    &nbsp; &ensp; &emsp;FROM employee<br />
+    &nbsp; &ensp; &emsp;GROUP BY department<br />
+    &nbsp; &ensp; &emsp;HAVING COUNT(*) > 5;<br />
+
+    <br /><br />
+    <strong>Limit Clause</strong><br />
+    &nbsp; &ensp; &emsp; Used to limit the number of rows returned by an SQL
+    statement.<br />
+    &nbsp; &ensp; &emsp; select * from student where marks > 75 limit 5;<br />
+    &nbsp; &ensp; &emsp; SELECT * FROM employee LIMIT 5;<br />
+    &nbsp; &ensp; &emsp; SELECT * FROM employee LIMIT 5 OFFSET 2;<br />
+    &nbsp; &ensp; &emsp; In SQL Server, use: TOP<br />
+    &nbsp; &ensp; &emsp; SELECT TOP 5 * FROM employee;
+
+    <br /><br />
+
+    <strong>JOIN Clause</strong><br />
+    &nbsp; &ensp; &emsp; A JOIN is used to combine rows from two or more tables
+    based on a related column.<br />
+    &nbsp; &ensp; &emsp; Used to combine rows from two or more tables.<br />
+    <br />
+    <br />
+    &nbsp; &ensp; &emsp; Think like:<br />
+    &nbsp; &ensp; &emsp;&nbsp; &ensp; &emsp;Two tables have some connection
+    (relationship)<br />
+    &nbsp; &ensp; &emsp;&nbsp; &ensp; &emsp;👉 JOIN helps you fetch data
+    together in a single result.<br />
+    <br /><br />
+    <strong>Real-World Example - Table 1: customers</strong><br />
+    <p>| id &nbsp; &ensp; &emsp;| name |</p>
+    <p>| -- &nbsp; &ensp; &emsp;| ----- |</p>
+    <p>| 1 &nbsp; &ensp; &emsp;| Ravi |</p>
+    <p>| 2 &nbsp; &ensp; &emsp;| Meera |</p>
+    <p>| 3 &nbsp; &ensp; &emsp;| John |</p>
+    <br />
+    <br /><strong>Table 2: orders</strong><br />
+    <p>| id &nbsp; &ensp; &emsp;| customer_id &nbsp; | amount |</p>
+    <p>| -- &nbsp; &ensp; &emsp;| ----------- &nbsp; | ------ |</p>
+    <p>| 1 &nbsp; &ensp; &emsp;| 1 &nbsp; &ensp; &emsp;| 500 |</p>
+    <p>| 2 &nbsp; &ensp; &emsp;| 1 &nbsp; &ensp; &emsp;| 700 |</p>
+    <p>| 3 &nbsp; &ensp; &emsp;| 2 &nbsp; &ensp; &emsp;| 300 |</p>
+    <p></p>
+    <br /><br />
+
+    &nbsp; &ensp; &emsp; Types of JOIN:<br />
+
+    <strong style="color: blue">&nbsp; &ensp; &emsp; INNER JOIN</strong><br />
+    &nbsp; &ensp; &emsp; &nbsp; &ensp; &emsp; Inner join is the default join
+    type. It returns only the rows that have a match in both tables.<br />
+    <br />
+    &nbsp; &ensp; &emsp;
+    <strong>Only returns matching records from both tables.</strong><br />
+    <strong style="color: brown">
+      SELECT customers.name, orders.amount &nbsp; &ensp; &emsp; FROM customers
+      &nbsp; &ensp; &emsp; INNER JOIN orders ON customers.id =
+      orders.customer_id;</strong
+    ><br /><br />
+
+    OuTPUT :
+    <p>| name | amount |</p>
+    <p>| ----- | ------ |</p>
+    <p>| Ravi | 500 |</p>
+    <p>| Ravi | 700 |</p>
+    <p>| Meera | 300 |</p>
+    <br /><br />
+    Inner Join : ❗ John has no orders → not shown (ONLY matching data returned)
+    <br /><br />
+
+    <strong style="color: blue"> &nbsp; &ensp; &emsp; LEFT JOIN</strong><br />
+    &nbsp; &ensp; &emsp; &nbsp; &ensp; &emsp; Left join returns all rows from
+    the left table, even if there is no match in the right table.<br />
+
+    &nbsp; &ensp; &emsp;👉 Return all rows from left table,<br />
+    &nbsp; &ensp; &emsp;👉 and matching rows from right table.<br />
+    &nbsp; &ensp; &emsp;👉 If no match → show NULL.<br />
+    <br /><strong style="color: brown">
+      SELECT customers.name, orders.amount FROM customers LEFT JOIN orders ON
+      customers.id = orders.customer_id;</strong
+    ><br />
+
+    <br />
+    OuTPUT :
+    <p>| name | amount |</p>
+    <p>| ----- | ------ |</p>
+    <p>| Ravi | 500 |</p>
+    <p>| Ravi | 700 |</p>
+    <p>| Meera | 300 |</p>
+    <p>| John | NULL |</p>
+    <br /><br />
+    <strong
+      >LEFT JOIN : John has NO order → so amount = NULL (Left table employees
+      always shown)</strong
+    ><br /><br />
+
+    <strong style="color: blue">&nbsp; &ensp; &emsp; RIGHT JOIN</strong><br />
+    &nbsp; &ensp; &emsp; &nbsp; &ensp; &emsp; Right join returns all rows from
+    the right table, even if there is no match in the left table.<br />
+
+    &nbsp; &ensp; &emsp;👉 Opposite of LEFT JOIN<br />
+    &nbsp; &ensp; &emsp;👉 Return all rows from right table + matching from
+    left.<br />
+
+    <br /><strong style="color: brown">
+      SELECT customers.name, orders.amount FROM customers RIGHT JOIN orders ON
+      customers.id = orders.customer_id;</strong
+    ><br />
+
+    <br />
+    OuTPUT : (Same as INNER JOIN because every order has a customer)<br />
+    <p>| name | amount |</p>
+    <p>| ----- | ------ |</p>
+    <p>| Ravi | 500 |</p>
+    <p>| Ravi | 700 |</p>
+    <p>| Meera | 300 |</p>
+
+    <br /><br />
+    <strong
+      >RIGHT JOIN :(Same as INNER JOIN because every order has a customer)
+      (Right table employees always shown)</strong
+    ><br /><br />
+
+    <strong style="color: blue">&nbsp; &ensp; &emsp; FULL JOIN</strong><br />
+    &nbsp; &ensp; &emsp; &nbsp; &ensp; &emsp; Full join returns all rows from
+    both tables, even if there is no match.<br /><br />
+
+    &nbsp; &ensp; &emsp;👉 Returns all records from both tables<br />
+    &nbsp; &ensp; &emsp;👉 Matching = combined<br />
+    &nbsp; &ensp; &emsp;👉 No match = NULL<br />
+
+    &nbsp; &ensp; &emsp;Real-world use:<br />
+    &nbsp; &ensp; &emsp;Show all customers + all orders even if not linked.<br /><br />
+
+    <strong style="color: blue"> CROSS JOIN</strong><br />
+    &nbsp; &ensp; &emsp;👉 Returns cartesian product (every row × every row).<br />
+    &nbsp; &ensp; &emsp;Very rarely used.<br />
+
+    &nbsp; &ensp; &emsp;Example:<br />
+    &nbsp; &ensp; &emsp;3 customers × 2 products → 6 rows<br /><br />
+
+    &nbsp; &ensp; &emsp; SELECT * FROM employee INNER JOIN department ON
+    employee.department_id = department.id;<br />
+    &nbsp; &ensp; &emsp; SELECT * FROM employee LEFT JOIN department ON
+    employee.department_id = department.id;<br />
+    &nbsp; &ensp; &emsp; SELECT * FROM employee RIGHT JOIN department ON
+    employee.department_id = department.id;<br />
+    &nbsp; &ensp; &emsp; SELECT * FROM employee FULL JOIN department ON
+    employee.department_id = department.id;<br />
+    &nbsp; &ensp; &emsp; SELECT * FROM employee CROSS JOIN department;<br />
+
+    <br /><br />
+
+    <strong>Distinct Clause</strong><br />
+    &nbsp; &ensp; &emsp; Used to return only distinct (unique) values. Used to
+    remove duplicate values.<br />
+    &nbsp; &ensp; &emsp; select distinct city from employee; &nbsp; &ensp;
+    &emsp; SELECT DISTINCT department FROM employee;<br />
+    <br /><br />
+
+    <strong>INSERT Clause</strong> <br />
+    <strong>UPDATE Clause</strong> <br />
+    <strong>DELETE Clause</strong> <br />
+
+    <strong>UNION Clause</strong><br />
+
+    <strong>INTERSECT Clause</strong><br />
+    <strong>EXCEPT Clause</strong><br /><br />
+    <strong style="color: red">Order of SQL Clause Execution</strong>
+    <br />
+    &nbsp; &ensp; &emsp;SELECT ... <br />
+    &nbsp; &ensp; &emsp;FROM ... <br />
+    &nbsp; &ensp; &emsp;WHERE ... <br />
+    &nbsp; &ensp; &emsp;GROUP BY ... <br />
+    &nbsp; &ensp; &emsp;HAVING ... <br />
+    &nbsp; &ensp; &emsp;ORDER BY ... <br />
+    &nbsp; &ensp; &emsp;LIMIT ... <br />
+
+    <br />
+    <br />
+
+    <strong>Summary Table</strong><br />
+    <p>| Clause | Purpose |</p>
+    <p>| -------- | ----------------- |</p>
+    <p>| SELECT | Pick columns |</p>
+    <p>| FROM | Choose table |</p>
+    <p>| WHERE | Filter rows |</p>
+    <p>| GROUP BY | Group data |</p>
+    <p>| HAVING | Filter groups |</p>
+    <p>| ORDER BY | Sort rows |</p>
+    <p>| LIMIT | Limit rows |</p>
+    <p>| JOIN | Combine tables |</p>
+    <p>| DISTINCT | Remove duplicates |</p>
+    <p></p>
+    <br />
+    <br />
+
+    <strong>What Are SQL Functions?</strong><br />
+    &nbsp; &ensp; &emsp;SQL functions are built-in operations that perform
+    calculations, transform data, or summarize results.<br />
+    &nbsp; &ensp; &emsp;SQL functions are used to perform operations on data.<br />
+    <br />
+    &nbsp; &ensp; &emsp;They are of two main types:<br />
+
+    &nbsp; &ensp; &emsp; &nbsp; &ensp; &emsp;Scalar functions (concat,
+    substring, upper, lower, length, round, ceil, floor) : - Work on one value
+    and return one value.<br />
+
+    &nbsp; &ensp; &emsp; &nbsp; &ensp; &emsp;Aggregate functions (count, sum,
+    avg, min, max):- Work on multiple rows and return a single summary value.<br />
+
+    <br />
+    <strong>String Functions</strong>
+    <p>| Function | Example | Output |</p>
+    <p>| ------------- | ------------------------ | ------- |</p>
+    <p>| `UPPER()` | `UPPER('bhavesh')` | BHAVESH |</p>
+    <p>| `LOWER()` | `LOWER('HELLO')` | hello |</p>
+    <p>| `LENGTH()` | `LENGTH('SQL')` | 3 |</p>
+    <p>| `CONCAT()` | `CONCAT('A','B')` | AB |</p>
+    <p>| `SUBSTRING()` | `SUBSTRING('Hello',1,3)` | Hel |</p>
+    <p></p>
+    <br />
+
+    <strong>Number Functions</strong>
+    <p>| Function | Example | Output |</p>
+    <p>| --------- | ----------- | ------ |</p>
+    <p>| `ABS()` | ABS(-5) | 5 |</p>
+    <p>| `ROUND()` | ROUND(3.67) | 4 |</p>
+    <p>| `CEIL()` | CEIL(3.1) | 4 |</p>
+    <p>| `FLOOR()` | FLOOR(3.9) | 3 |</p>
+    <p></p>
+    <br />
+    <strong>Date Functions</strong>
+    <p>| Function | Example | Meaning |</p>
+    <p>
+      | ------------ | ----------------------------------- | ---------------- |
+    </p>
+    <p>| `CURDATE()` | returns today’s date | 2025-11-14 |</p>
+    <p>| `NOW()` | returns current date & time | 2025-11-14 16:30 |</p>
+    <p>| `YEAR(date)` | YEAR('2025-11-14') | 2025 |</p>
+    <p>| `MONTH()` | MONTH('2025-11-14') | 11 |</p>
+    <p>| `DATEDIFF()` | DATEDIFF('2025-11-14','2025-11-10') | 4 days |</p>
+    <p></p>
+    <br />
+
+    <strong>AGGREGATE FUNCTIONS</strong>
+    <p>| Function | Purpose |</p>
+    <p>| ----------- | ------------- |</p>
+    <p>| **COUNT()** | Count rows |</p>
+    <p>| **SUM()** | Add values |</p>
+    <p>| **AVG()** | Average value |</p>
+    <p>| **MIN()** | Minimum |</p>
+    <p>| **MAX()** | Maximum |</p>
+    <p></p>
+    <br />
+
+    <br />
+    Count number of rows: <br />
+    select count(*) from employee;
+
+    <br />
+    Count number of unique rows: <br />
+    select count(distinct department_id) from employee;
+    <br />
+    Count students in CS:<br />
+    SELECT COUNT(*) FROM student WHERE dept = 'CS';<br />
+    Total marks:<br />
+    SELECT SUM(marks) FROM student;<br />
+    Average marks:<br />
+    SELECT AVG(marks) FROM student;<br />
+    Minimum marks:<br />
+    SELECT MIN(marks) FROM student;<br />
+    Maximum marks:<br />
+    SELECT MAX(marks) FROM student;
+
+    <br /><br />
+    <strong>Aggregation with GROUP BY</strong><br />
+    Total students per department: &nbsp; &ensp; &emsp; SELECT dept, COUNT(*)
+    FROM student GROUP BY dept;<br />
+    Average marks per department: &nbsp; &ensp; &emsp; SELECT dept, AVG(marks)
+    FROM student GROUP BY dept;<br />
+    Minimum marks per department: &nbsp; &ensp; &emsp; SELECT dept, MIN(marks)
+    FROM student GROUP BY dept;<br />
+    Maximum marks per department: &nbsp; &ensp; &emsp; SELECT dept, MAX(marks)
+    FROM student GROUP BY dept; <br />
+    <br />
+
+    <strong>⭐ Using HAVING with Aggregate Functions</strong><br />
+    Get departments with more than 5 employees:<br />
+    SELECT department, COUNT(*)<br />
+    FROM employee<br />
+    GROUP BY department<br />
+    HAVING COUNT(*) > 5;<br />
+    <br />
+    Get departments with average marks > 85:<br />
+    SELECT department, AVG(marks)<br />
+    FROM student<br />
+    GROUP BY department<br />
+    HAVING AVG(marks) > 85;<br />
+    <br />
+
+    <br />
+    <br />
+  </body>
+</html>
