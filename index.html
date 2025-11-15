@@ -898,7 +898,25 @@
       (Right table employees always shown)</strong
     ><br /><br />
 
-    <strong style="color: blue">&nbsp; &ensp; &emsp; FULL JOIN</strong><br />
+    <strong
+      >Extra filter with join that is not supported in database directly</strong
+    ><br />
+    Extra join like - Write SQL commands to display the
+    <strong style="color: red"> right exclusive join</strong> or
+    <strong style="color: red">left exclusive join</strong>:<br />
+    SELECT * FROM table1 t1 LEFT JOIN table2 t2 ON t1.id = t2.id
+    <strong style="color: red"> WHERE t2.id IS NULL;</strong><br />
+    SELECT * FROM table1 t1 RIGHT JOIN table2 t2 ON t1.id = t2.id
+    <strong style="color: red">WHERE t1.id IS NULL;</strong><br />
+    <strong>Full exclusive join</strong><br />
+    SELECT * FROM table1 t1 LEFT JOIN table2 t2 ON t1.id = t2.id WHERE t2.id IS
+    NULL <strong style="color: red"> UNION</strong> SELECT * FROM table1 t1
+    RIGHT JOIN table2 t2 ON t1.id = t2.id WHERE t1.id IS NULL; <br /><br />
+
+    <strong style="color: blue"
+      >&nbsp; &ensp; &emsp; FULL JOIN : (Not supported in MySQL directly so we
+      use LEFT JOIN + RIGHT JOIN with UNION)</strong
+    ><br />
     &nbsp; &ensp; &emsp; &nbsp; &ensp; &emsp; Full join returns all rows from
     both tables, even if there is no match.<br /><br />
 
@@ -942,8 +960,8 @@
     <strong>UNION Clause</strong><br />
     UNION is used to combine the result of two or more SELECT queries → into one
     single result set.<br />
-    It is used to combine the result-set of two or more SELECT statements. Gives
-    UNIQUE records.<br />
+    It is used to combine the result-set of two or more SELECT statements.
+    <br />Gives UNIQUE records.<br />
     Removes duplicate rows (by default)<br />
     Columns must be same count & compatible datatype<br />
     to use it<br />
@@ -965,6 +983,28 @@
     <p>| Meera | 27 |</p>
     <p>| John | 30 |</p>
     <br /><br />
+    <strong>Self Join</strong><br />
+    Joining a table with itself.<br />
+    it is a<strong> regular join </strong>but the table is joined with
+    itself.<br /><br />
+    syntax: <br />
+    SELECT * FROM table1 t1 JOIN table1 t2 ON t1.id = t2.id; Real Example:<br /><br />
+
+    example:Employee → Manager relationship<br /><br />
+
+    SELECT e.name AS employee, m.name AS manager<br />
+    FROM employee e<br />
+    LEFT JOIN employee m ON e.manager_id = m.id;<br /><br />
+
+    - here output is same as LEFT JOIN. LEFT JOIN keeps unmatched rows and shows
+    NULL.<br /><br />
+
+    SELECT e.name AS employee, m.name AS manager<br />
+    FROM employee e<br />
+    JOIN employee m ON e.manager_id = m.id;<br /><br />
+
+    - here output is same as INNER JOIN. Show only employees who have a valid
+    manager.<br /><br />
 
     <strong>INTERSECT Clause</strong><br />
     <strong>EXCEPT Clause</strong><br /><br />
@@ -1119,6 +1159,7 @@
       <li><strong>Single-row Subquery</strong></li>
       <li>
         A subquery that returns only one value.<br />
+
         Example:<br />
 
         Find students who have the highest marks.<br />
@@ -1131,9 +1172,12 @@
         Here:<br />
         Inner query → gets highest marks<br />
         Outer query → finds the student with that mark<br /><br />
+
+        <br /><br />
       </li>
       <li>
         <strong>Multi-row Subquery</strong><br />
+
         A subquery that returns multiple rows, used with:<br /><br />
         <ul>
           <li>IN</li>
@@ -1152,7 +1196,6 @@
         FROM department<br />
         WHERE location = 'Delhi');<br /><br />
         Inner query returns multiple dept IDs → outer query uses them.
-
         <br /><br />
       </li>
 
@@ -1178,6 +1221,7 @@
         ><br />
         <ul>
           <li>
+            Subquery in the WHERE clause — “filter based on other data”<br />
             WHERE wtih EXISTS clause:<br />
             EXISTS checks if the subquery returns at least one row
             (TRUE/FALSE).<br />
@@ -1192,6 +1236,7 @@
 
           <li>
             FROM<br />
+            Subquery in the FROM clause — “derived table / inline view”<br />
             A subquery used as a table.<br />
             Example:<br />
             Find average marks of top 5 students.<br /><br />
@@ -1199,9 +1244,47 @@
             DESC LIMIT 5) AS top5;<br />
             The inner query creates a temporary table top5.<br />
             <br /><br />
+
+            <br /><br />
+            SELECT dept, AVG(marks) AS avg_top3<br />
+            FROM (<br />
+            SELECT dept, marks<br />
+            FROM student<br />
+            ORDER BY marks DESC<br />
+            LIMIT 3<br />
+            ) AS top3<br />
+            GROUP BY dept;
+            <br /><br />
+
+            <strong>Alternative : same but writing style is different</strong>
+            <br />
+            WITH top3 AS (<br />
+            SELECT dept, marks FROM student ORDER BY marks DESC LIMIT 3 )<br />
+            SELECT dept, AVG(marks) FROM top3 GROUP BY dept;
+
+            <br /><br />
+
+            What it does (concept)<br />
+
+            The subquery acts like a temporary table (a derived table) that the
+            outer query reads from.<br />
+
+            The outer query treats the subquery result as if it were a regular
+            table (alias required).<br /><br />
+
+            Use-case<br />
+
+            When you need to:<br />
+
+            Precompute or filter rows and then run aggregations / joins on that
+            result.<br />
+
+            Select top-N rows or produce a transformed table that you query
+            further.<br /><br />
           </li>
           <li>
             SELECT <br />
+            Subquery in the SELECT clause — “compute a value per row”<br />
             Useful for adding calculated fields<br /><br />
             Example:<br />
             Show each student name with total student count.<br />
@@ -1209,6 +1292,31 @@
             (SELECT COUNT(*) FROM student) AS total_students<br />
             FROM student;<br /><br />
             Same count repeated for each row (useful in reports).<br />
+
+            SELECT<br />
+            c.id,<br />
+            c.name,<br />
+            (SELECT COUNT(*) FROM orders o WHERE o.customer_id = c.id) AS
+            order_count<br />
+            FROM customers c;<br />
+            <br />
+            What it does (concept)<br />
+
+            The subquery computes a value for each row of the outer query.<br />
+
+            Here: for every customer row c, find the number of orders that have
+            customer_id = c.id<br /><br />
+            USe-case: When you need a single computed value per row (totals,
+            flags, min/max related to that row).<br /><br />
+            <strong>Alternative (usually faster):</strong><br />
+            SELECT c.id, c.name, COALESCE(o.order_count, 0) AS order_count<br />
+            FROM customers c<br />
+            LEFT JOIN (<br />
+            SELECT customer_id, COUNT(*) AS order_count<br />
+            FROM orders<br />
+            GROUP BY customer_id<br />
+            ) o ON o.customer_id = c.id;<br />
+            <br />
           </li>
         </ul>
 
@@ -1244,10 +1352,12 @@
     ✔ For filtering data based on another table<br />
     ✔ To write cleaner, readable SQL<br />
 
-    <strong>🔍 When NOT to use Subqueries?</strong>
+    <strong>🔍 When NOT to use Subqueries?</strong><br />
 
     ❌ When same results can be achieved by a JOIN → JOIN is faster<br />
     ❌ When subquery runs many times → slow performance<br />
+    JOIN is faster in most databases because it uses indexing and avoids the
+    repeated filtering of the subquery.<br /><br />
 
     Get employees with more than 5 orders: We Have Two Way to got it<br />
     SELECT *<br />
@@ -1265,7 +1375,11 @@
     INNER JOIN orders o<br />
     ON c.id = o.customer_id<br />
     WHERE o.order_date < '2024-01-01';
-    <br /><br />
+    <br /><strong style="color: red"
+      >One customer may have multiple orders, so JOIN may produce duplicates.
+      <br />
+      DISTINCT removes duplicate customers.</strong
+    ><br />
 
     <p>| Subquery Type | Example Use |</p>
     <p>| ------------- | ---------------------------- |</p>
@@ -1274,5 +1388,316 @@
     <p>| EXISTS | check if matching row exists |</p>
     <p>| FROM | temporary table |</p>
     <p>| SELECT | adding calculated fields |</p>
+
+    <br /><br />
+    <strong>MySQL Views</strong><br />
+    A view is a virtual table based on the result of a SQL statement.<br />
+    A view is a logical entity that represents a result set from a database.<br />
+    <br />
+    Note - a view always show up-to-date data. the database engine recreates the
+    view, every time a user queries it.<br />
+    It looks like a table<br />
+
+    You can SELECT from it like a table<br />
+
+    But it does not store data — it stores only a SQL query<br />
+
+    When you read from the view → MySQL runs the stored query and returns
+    results<br />
+    <br />
+    👉 Think of a View as a saved SELECT query.<br /><br />
+    <strong>Why use Views? (Advantages)</strong><br />
+    <br />
+    1. Reusability<br />
+    <br />
+    You don't need to write complex SQL again and again.<br />
+    <br />
+    ✔ 2. Security<br />
+    <br />
+    You can hide sensitive columns.<br />
+    <br />
+    Example:<br />
+    <br />
+    Actual table has salary<br />
+    <br />
+    You create a view without salary<br />
+    <br />
+    Give access to the view only<br />
+    <br />
+    ✔ 3. Simplify complex queries<br />
+    <br />
+    Complex joins become easy.<br />
+    <br />
+    ✔ 4. Makes database modular<br />
+    <br />
+    Frontend/app can work with simple views instead of messy queries.<br /><br />
+
+    <strong>How to Create a View</strong><br />
+    CREATE VIEW view_name AS<br />
+    SELECT columns<br />
+    FROM table_name<br />
+    WHERE conditions;<br /><br />
+
+    example:<br />
+    Example 1: Simple View<br />
+    CREATE VIEW employee_public AS SELECT id, name, department FROM
+    employees;<br />
+    <br />
+    Use the view:<br />
+    SELECT * FROM employee_public;
+    <br />
+    <br />
+    <strong>Example 2: View with JOIN</strong><br />
+    CREATE VIEW student_with_marks AS<br />
+    SELECT s.student_id, s.name, m.subject, m.marks<br />
+    FROM students s<br />
+    JOIN marks m ON s.student_id = m.student_id;<br />
+    <br />
+    <br />
+    Use the view:<br />
+    SELECT * FROM student_with_marks;
+    <br /><br />
+    <strong> Updating Views</strong><br />
+    Update the view definition<br />
+    CREATE OR REPLACE VIEW employee_public AS SELECT id, name FROM employees;
+    <br /><br />
+
+    <strong>Deleting Views</strong><br />
+    DROP VIEW employee_public;
+    <br />
+    <br />
+    <strong>Renaming Views</strong><br />
+    RENAME TABLE employee_public TO employee_public_view;<br /><br />
+    <strong>Why Views are Useful in Real Projects?</strong><br />
+    ✔ Reduce repeated code<br />
+    ✔ Increase security<br />
+    ✔ Cleaner database structure<br />
+    ✔ API / Frontend get ready-made results<br />
+    ✔ Helps maintain large reports (sales, analytics, etc.)<br />
+    <br />
+    <br />
+    | Feature | View |<br />
+    | ----------------------------- | --------- |<br />
+    | Stores data? | ❌ No |<br />
+    | Stores query? | ✔ Yes |<br />
+    | Used like table? | ✔ Yes |<br />
+    | Updatable? | Sometimes |<br />
+    | Good for security? | ✔ Yes |<br />
+    | Good for simplifying queries? | ✔ Yes |<br />
+    | Good for reusability? | ✔ Yes |<br /><br />
+    <strong
+      >Are Views Updatable? <br />
+      Answere is Not always.</strong
+    >
+    <br />
+    You can update a view only if:<br />
+    <br />
+    ✔ It is created from one table<br />
+    ✔ No GROUP BY<br />
+    ✔ No DISTINCT<br />
+    ✔ No UNION<br />
+    ✔ No aggregate functions (SUM, COUNT etc.)<br />
+    <br /><br />
+    View are store in workbench views menu. <br /><br />
+
+    <strong>Stored Procedure Example</strong><br />
+    Suppose you need to insert a new order and update stock:<br /><br />
+    CREATE PROCEDURE addOrder(IN p_customer INT, IN p_product INT, IN p_qty
+    INT)<br />
+    BEGIN<br />
+    INSERT INTO orders(customer_id, product_id, qty) VALUES (p_customer,
+    p_product, p_qty);<br />
+    UPDATE products SET stock = stock - p_qty WHERE id = p_product;<br />
+    END;<br />
+    <br /><br />
+    call this way / used <br />
+    CALL addOrder(1, 101, 2);
+    <br /><br />
+    <p>
+      ✓ Logic reusable<br />
+      ✓ No need to write 2 queries every time<br />
+      ✓ Cleaner and safer
+    </p>
+
+    DELIMITER //
+    <br />CREATE PROCEDURE transfer_money( <br />
+    IN sender INT, <br />
+    IN receiver INT, <br />
+    IN amount DECIMAL(10,2) <br />) <br />BEGIN <br />
+    -- 1. Check balance <br />
+    IF (SELECT balance FROM accounts WHERE account_number = sender) < amount
+    THEN <br />
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Insufficient Balance'; <br />
+    END IF;
+    <br />
+    <br />
+    -- 2. Deduct from sender <br />
+    UPDATE accounts SET balance = balance - amount <br />
+    WHERE account_number = sender;
+    <br />
+    <br />
+    -- 3. Add to receiver <br />
+    UPDATE accounts SET balance = balance + amount <br />
+    WHERE account_number = receiver;
+    <br />
+    <br />
+    -- 4. Log transaction <br />
+    INSERT INTO transactions(sender, receiver, amount, created_at) <br />
+    VALUES (sender, receiver, amount, NOW()); <br />END // <br />DELIMITER ;
+    <br />
+
+    <strong style="color: red"
+      >Views vs Stored Procedures (Easy & Deep Explanation)</strong
+    ><br />
+    <p>
+      1. What is a View? A View is a virtual table created from a SELECT
+      query.<br />
+
+      ✓ Key Points<br />
+
+      Contains no data → only a saved SELECT statement.<br />
+
+      Treated like a table (SELECT * FROM view_name).<br />
+
+      Main purpose → simplify SELECT queries, security, reusability.<br />
+
+      May be updatable, depending on the query.<br />
+      Cannot accept parameters.<br />
+    </p>
+    <br />
+    <p>| Feature | Explanation |</p>
+    <p>
+      | -------------- |
+      ------------------------------------------------------------------ |
+    </p>
+    <p>| Definition | A **virtual table** created from a SELECT query |</p>
+    <p>| Data Storage | Does **not** store data — only query definition |</p>
+    <p>| Usage | Used mainly for **reading** data (SELECT) |</p>
+    <p>| Parameters | ❌ Cannot accept parameters |</p>
+    <p>
+      | Performance | May improve readability; not major performance boost |
+    </p>
+    <p>| Update support | Can be **updatable** but with restrictions |</p>
+    <p>
+      | Example | `CREATE VIEW highMarks AS SELECT * FROM student WHERE marks >
+      80;` |
+    </p>
+    <p>
+      Use View when:<br />
+
+      You want to simplify complex SELECT queries<br />
+
+      You want to restrict user access to specific columns/rows<br />
+
+      You want a logical layer for data security<br />
+    </p>
+    <br />
+
+    <br />
+    <p>
+      2. What is a Stored Procedure?<br />
+      <br />
+      A Stored Procedure is a program/piece of code stored in the database.<br />
+      <br />
+      ✓ Key Points<br />
+      <br />
+      Can contain multiple SQL statements (SELECT, INSERT, UPDATE…).<br />
+      <br />
+      Accepts parameters (IN, OUT).<br />
+      <br />
+      Used to perform business logic.<br />
+      <br />
+      Can return results.<br />
+      <br />
+      More powerful than views.<br />
+    </p>
+    <br />
+    <p>| Feature | Explanation |</p>
+    <p>
+      | ------------- | -------------------------------------------------------
+      |
+    </p>
+    <p>
+      | Definition | A **saved program** that performs tasks (SQL + logic) |
+    </p>
+    <p>| Data Storage | Stored like a function in database |</p>
+    <p>| Usage | Used for **operations** (INSERT/UPDATE/DELETE + SELECT) |</p>
+    <p>| Parameters | ✔ Can accept **input/output parameters** |</p>
+    <p>| Performance | Improves performance & reduces server load |</p>
+    <p>| Logic/Control | Can use **loops, conditions, variables** |</p>
+    <p>| Example | `CALL addStudent('Ravi', 80);` |</p>
+    <br />
+    <p>
+      Use Stored Procedure when:<br />
+
+      You need reusable database logic<br />
+
+      Want complex operations (not just select)<br />
+
+      Need better performance and reduced network traffic<br />
+
+      Need input/output parameters<br />
+    </p>
+    <br />
+    <br />
+    <strong>Key Differences Summary (Quick Notes for Interviews)</strong><br />
+    <p>| Views | Stored Procedures |</p>
+    <p>| ----------------------- | ------------------------- |</p>
+    <p>| Virtual table | Database program |</p>
+    <p>| Only SELECT | Can do all SQL operations |</p>
+    <p>| No parameters | Supports parameters |</p>
+    <p>| Limited logic | Full programming logic |</p>
+    <p>| Used for data retrieval | Used for business logic |</p>
+    <p>| Not compiled | Precompiled → faster |</p>
+    <p></p>
+    <br />
+    <br />
+    <p><strong>When to Use What?</strong></p>
+
+    <p>Use View when:</p>
+
+    <p>You want a simplified SELECT query</p>
+
+    <p>You want to hide sensitive columns</p>
+
+    <p>You want consistent presentation of data</p>
+
+    <p>Mostly for reporting and data filtering</p>
+
+    <p><strong>Use Stored Procedure when:</strong></p>
+
+    <p>Complex logic (loops, conditions)</p>
+
+    <p>Insert/update/delete operations</p>
+
+    <p>Repeated tasks</p>
+
+    <p>Improve security by hiding logic</p>
+
+    <p>Accept parameters</p>
+
+    <p>| Feature | View | Stored Procedure |</p>
+    <p>
+      | -------------------------- | ----------------------------------- |
+      ------------------------------- |
+    </p>
+    <p>| **Type** | Virtual table | Stored program |</p>
+    <p>| **Stores data?** | ❌ No | ❌ No (but can modify data) |</p>
+    <p>| **Stores SQL?** | ✔ SELECT only | ✔ Multiple SQL statements |</p>
+    <p>
+      | **Can modify data?** | ❌ Mostly No (except updatable view) | ✔ Yes
+      (INSERT, UPDATE, DELETE) |
+    </p>
+    <p>| **Can accept parameters?** | ❌ No | ✔ Yes |</p>
+    <p>| **Usage** | Simplify SELECT queries | Complex logic, automation |</p>
+    <p>
+      | **Performance** | Good for static queries | Good for repeated operations
+      |
+    </p>
+    <p>
+      | **Security** | Hide columns from users | Hide entire business logic |
+    </p>
+    <p>| **Execution** | Used like table | Called using `CALL procedure()` |</p>
+    <p></p>
   </body>
 </html>

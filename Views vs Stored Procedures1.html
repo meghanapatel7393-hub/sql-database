@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Views vs Stored Procedures</title>
+</head>
+<body>
+
+    <h1>📌 Views vs Stored Procedures</h1>
+
+    <h2>🔹 Views</h2>
+    <ul>
+        <li>A <strong>virtual table</strong> created from a SELECT query.</li>
+        <li>Does <strong>not store data</strong> — only stores the query definition.</li>
+        <li>Used mainly for <strong>reading data</strong> (SELECT).</li>
+        <li><strong>No parameters</strong> allowed.</li>
+        <li>Makes SELECT queries simple and clean.</li>
+        <li>Can hide columns for <strong>security</strong>.</li>
+        <li>May be updatable (with restrictions).</li>
+    </ul>
+
+    <pre>
+CREATE VIEW highMarks AS
+SELECT * FROM student WHERE marks > 80;
+    </pre>
+
+    <hr>
+
+    <h2>🔹 Stored Procedures</h2>
+    <ul>
+        <li>A <strong>stored program</strong> that performs tasks.</li>
+        <li>Can perform <strong>INSERT, UPDATE, DELETE, SELECT</strong>.</li>
+        <li>Supports <strong>input/output parameters</strong>.</li>
+        <li>Can include <strong>logic, conditions, loops</strong>.</li>
+        <li>Precompiled → <strong>faster execution</strong>.</li>
+        <li>Used to build <strong>business logic</strong> inside database.</li>
+    </ul>
+
+    <pre>
+DELIMITER //
+CREATE PROCEDURE getStudent(IN sid INT)
+BEGIN
+    SELECT * FROM student WHERE id = sid;
+END //
+DELIMITER ;
+    </pre>
+
+    <hr>
+
+    <h2>🔥 Key Differences Summary</h2>
+    <table border="1" cellpadding="10">
+        <tr>
+            <th>Views</th>
+            <th>Stored Procedures</th>
+        </tr>
+        <tr>
+            <td>Virtual table</td>
+            <td>Stored program</td>
+        </tr>
+        <tr>
+            <td>Used for reading data</td>
+            <td>Used for performing operations</td>
+        </tr>
+        <tr>
+            <td>No parameters</td>
+            <td>Supports parameters</td>
+        </tr>
+        <tr>
+            <td>Limited / no logic</td>
+            <td>Can contain full logic</td>
+        </tr>
+        <tr>
+            <td>Not compiled</td>
+            <td>Precompiled → faster</td>
+        </tr>
+    </table>
+
+    <hr>
+
+    <h2>💡 Memory Trick</h2>
+    <p><strong>Views = What to show</strong></p>
+    <p><strong>Stored Procedures = What to do</strong></p>
+
+</body>
+</html>
