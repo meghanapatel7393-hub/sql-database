@@ -1249,22 +1249,30 @@
     ❌ When same results can be achieved by a JOIN → JOIN is faster<br />
     ❌ When subquery runs many times → slow performance<br />
 
-    Get employees with more than 5 orders:<br />
+    Get employees with more than 5 orders: We Have Two Way to got it<br />
     SELECT *<br />
     FROM employee<br />
     WHERE id IN<br />
     (SELECT employee_id<br />
     FROM order<br />
     GROUP BY employee_id<br />
-    HAVING COUNT(*) > 5);<br><br>
+    HAVING COUNT(*) > 5);<br /><br />
 
-<p>    | Subquery Type | Example Use                  |</p>
-<p>| ------------- | ---------------------------- |</p>
-<p>| Single-row    | max, min, avg                |</p>
-<p>| Multi-row     | dept IN (…)                  |</p>
-<p>| EXISTS        | check if matching row exists |</p>
-<p>| FROM          | temporary table              |</p>
-<p>| SELECT        | adding calculated fields     |</p>
+    OR
+    <br /><br />
+    SELECT DISTINCT c.name<br />
+    FROM customers c<br />
+    INNER JOIN orders o<br />
+    ON c.id = o.customer_id<br />
+    WHERE o.order_date < '2024-01-01';
+    <br /><br />
 
+    <p>| Subquery Type | Example Use |</p>
+    <p>| ------------- | ---------------------------- |</p>
+    <p>| Single-row | max, min, avg |</p>
+    <p>| Multi-row | dept IN (…) |</p>
+    <p>| EXISTS | check if matching row exists |</p>
+    <p>| FROM | temporary table |</p>
+    <p>| SELECT | adding calculated fields |</p>
   </body>
 </html>
