@@ -257,29 +257,75 @@
       ALTER TABLE employees ADD COLUMN dept VARCHAR(50), ADD COLUMN city
       VARCHAR(50);
     </h3>
-    <h3 style="color: red;">
+    <h3 style="color: red">
       Add foreign key to existing table<br />
       ALTER TABLE orders<br />
       ADD CONSTRAINT fk_customer<br />
       FOREIGN KEY (customer_id) REFERENCES customers(id);<br />
+      -- optional actions: -- ON DELETE CASCADE -- ON UPDATE CASCADE<br />
     </h3>
     <br />
     <h3>Drop Column - ALTER TABLE TABLE_NAME DROP COLUMN COLUMN_NAME</h3>
     <br />
     <h3>
-      Modify Column - ALTER TABLE TABLE_NAME MODIFY COLUMN_NAME DATA_TYPE
+      Modify Column - ALTER TABLE TABLE_NAME MODIFY COLUMN COLUMN_NAME DATA_TYPE
       CONSTRAINT <br />
       Modify / change datatype/ constraint<br />
-      ALTER TABLE employees MODIFY salary DECIMAL(10,2);
+      ALTER TABLE employees MODIFY COLUMN salary DECIMAL(10,2);
     </h3>
     <br />
     <h3>
-      change/Rename Column - ALTER TABLE TABLE_NAME CHANGE COLUMN OLD_COLUMN_NAME
+      change/Rename Column - ALTER TABLE TABLE_NAME CHANGE OLD_COLUMN_NAME
       NEW_COLUMN_NAME DATA_TYPE CONSTRAINT
     </h3>
+
+    <h3 style="color: blue">
+      this both work change and modify<br />
+      alter table student modify column age varchar(50) default "21";<br />
+      alter table student change column age ages int default 10;<br />
+      there are small difference<br />
+      What MODIFY does? <br />
+      Changes datatype <br />
+      Changes default value<br />
+      Changes constraints<br />
+      Does NOT change the column name<br />
+      👉 MODIFY only updates the properties of the same column.<br />
+      MODIFY cannot change column name.<br />
+      used modify when Only properties change
+      <br /><br />
+      What CHANGE does?<br />
+
+      Renames the column (age → ages)<br />
+
+      Changes datatype<br />
+
+      Changes default value<br />
+
+      Changes constraints<br />
+      used when Name + datatype change<br />
+
+      👉 CHANGE can do everything MODIFY does, plus it can rename the column.<br />
+      CHANGE requires full column definition<br />
+      While using CHANGE, you must specify the full datatype again.<br />
+    </h3>
+
     <br />
-    <br>
+    <br />
     <h3>Rename Table - RENAME TABLE TABLE_NAME TO NEW_TABLE_NAME</h3>
+    <h4>
+      alter table student rename to stu;<br />
+      rename table student to stu;<br />
+
+      both correct just difference:<br />
+    </h4>
+    <p>| Feature | ALTER TABLE RENAME | RENAME TABLE |</p>
+    <p>| ---------------------- | ------------------ | ----------------- |</p>
+    <p>| Rename single table | ✔ Yes | ✔ Yes |</p>
+    <p>| Rename multiple tables | ❌ No | ✔ Yes |</p>
+    <p>| Move table between DBs | ❌ No | ✔ Yes |</p>
+    <p>| Older MySQL support | After MySQL 8 | Always supported |</p>
+    <p>| Syntax style | Part of ALTER | Dedicated command |</p>
+    <br />
     <br />
     <h3>Drop Table - DROP TABLE TABLE_NAME</h3>
     <br />
@@ -741,7 +787,7 @@
 
     <strong>JOIN Clause</strong><br />
     &nbsp; &ensp; &emsp; A JOIN is used to combine rows from two or more tables
-    based on a related column.<br />
+    based on a related column. <br />
     &nbsp; &ensp; &emsp; Used to combine rows from two or more tables.<br />
     <br />
     <br />
@@ -751,6 +797,14 @@
     &nbsp; &ensp; &emsp;&nbsp; &ensp; &emsp;👉 JOIN helps you fetch data
     together in a single result.<br />
     <br /><br />
+    <strong style="color: red"
+      >during inner join we can assign short name for table in query like <br />
+      select * from table1 t1 inner join table2 t2 on t1.id=t2.id<br />
+      select * from dept d inner join teacher t on d.id = t.dept_id;<br />
+      OR<br />
+      select * from dept as d inner join teacher as t on d.id = t.dept_id;
+      <br />
+    </strong>
     <strong>Real-World Example - Table 1: customers</strong><br />
     <p>| id &nbsp; &ensp; &emsp;| name |</p>
     <p>| -- &nbsp; &ensp; &emsp;| ----- |</p>
@@ -886,6 +940,31 @@
     <strong>DELETE Clause</strong> <br />
 
     <strong>UNION Clause</strong><br />
+    UNION is used to combine the result of two or more SELECT queries → into one
+    single result set.<br />
+    It is used to combine the result-set of two or more SELECT statements. Gives
+    UNIQUE records.<br />
+    Removes duplicate rows (by default)<br />
+    Columns must be same count & compatible datatype<br />
+    to use it<br />
+    every SELECT should have same no. of columns<br />
+    columns must have similar data types<br />
+    columns in every SELECT should be in same order<br /><br />
+
+    <strong style="color: brown">
+      SELECT name, age FROM employee1<br />
+      UNION<br />
+      SELECT name, age FROM employee2;</strong
+    ><br />
+
+    <br />
+    OuTPUT :
+    <p>| name | age |</p>
+    <p>| ----- | --- |</p>
+    <p>| Ravi | 25 |</p>
+    <p>| Meera | 27 |</p>
+    <p>| John | 30 |</p>
+    <br /><br />
 
     <strong>INTERSECT Clause</strong><br />
     <strong>EXCEPT Clause</strong><br /><br />
@@ -1021,6 +1100,22 @@
     GROUP BY department<br />
     HAVING AVG(marks) > 85;<br />
     <br />
+    <br />
+
+    <strong>SQL Sub Queries A Subquery or Inner query or Nested query</strong><br />
+    
+    A Subquery or Inner query or a Nested query is a query within another SQL query.<br>
+    Get employees with more than 5 orders:<br />
+    SELECT *<br />
+    FROM employee<br />
+    WHERE id IN<br />
+    (SELECT employee_id<br />
+    FROM order<br />
+    GROUP BY employee_id<br />
+    HAVING COUNT(*) > 5);
+    <br /><br />
+
+    
 
     <br />
     <br />
