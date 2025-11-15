@@ -1256,6 +1256,15 @@
     (SELECT employee_id<br />
     FROM order<br />
     GROUP BY employee_id<br />
-    HAVING COUNT(*) > 5);
+    HAVING COUNT(*) > 5);<br><br>
+
+<p>    | Subquery Type | Example Use                  |</p>
+<p>| ------------- | ---------------------------- |</p>
+<p>| Single-row    | max, min, avg                |</p>
+<p>| Multi-row     | dept IN (…)                  |</p>
+<p>| EXISTS        | check if matching row exists |</p>
+<p>| FROM          | temporary table              |</p>
+<p>| SELECT        | adding calculated fields     |</p>
+
   </body>
 </html>
