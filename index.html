@@ -1102,9 +1102,153 @@
     <br />
     <br />
 
-    <strong>SQL Sub Queries A Subquery or Inner query or Nested query</strong><br />
-    
-    A Subquery or Inner query or a Nested query is a query within another SQL query.<br>
+    <strong style="color: red"
+      >SQL Sub Queries A Subquery or Inner query or Nested query</strong
+    ><br />
+
+    A Subquery or Inner query or a Nested query is a query within another SQL
+    query.<br />
+    It is used when you need a result from another query to complete the main
+    query.<br />
+    👉 A subquery always returns some value(s), and the outer query uses those
+    values.<br /><br />
+    <h1>Types of Subqueries</h1>
+    <ul>
+      <!-- <li>Correlated Subquery</li>
+      <li>Non-Correlated Subquery</li> -->
+      <li><strong>Single-row Subquery</strong></li>
+      <li>
+        A subquery that returns only one value.<br />
+        Example:<br />
+
+        Find students who have the highest marks.<br />
+
+        <br />
+        SELECT name, marks<br />
+        FROM student<br />
+        WHERE marks = (SELECT MAX(marks) FROM student);<br /><br />
+
+        Here:<br />
+        Inner query → gets highest marks<br />
+        Outer query → finds the student with that mark<br /><br />
+      </li>
+      <li>
+        <strong>Multi-row Subquery</strong><br />
+        A subquery that returns multiple rows, used with:<br /><br />
+        <ul>
+          <li>IN</li>
+          <li>ANY</li>
+          <li>ALL</li>
+          <li>EXISTS</li>
+          <li>NOT EXISTS</li>
+        </ul>
+        <br /><br />
+        Find teachers who belong to departments located in 'Delhi'.<br />
+        <br />
+        SELECT name<br />
+        FROM teacher<br />
+        WHERE department_id IN<br />
+        (SELECT id<br />
+        FROM department<br />
+        WHERE location = 'Delhi');<br /><br />
+        Inner query returns multiple dept IDs → outer query uses them.
+
+        <br /><br />
+      </li>
+
+      <li>
+        <strong>Multi-column Subquery</strong><br />
+        Subquery returns more than one column.<br />
+        Example:<br />
+        Find departments where (min_salary, max_salary) match the company
+        standard.<br />
+        <br />
+        SELECT * <br />or<br />
+        SELECT dept_name <br />
+        FROM department<br />
+        WHERE (min_salary, max_salary) IN<br />
+        (SELECT min_salary, max_salary<br />
+        FROM company_standard); <br />
+        <br /><br />
+      </li>
+
+      <li>
+        <strong style="color: red"
+          >Nested Subquery (inside WHERE, FROM, SELECT)</strong
+        ><br />
+        <ul>
+          <li>
+            WHERE wtih EXISTS clause:<br />
+            EXISTS checks if the subquery returns at least one row
+            (TRUE/FALSE).<br />
+            Example:<br />
+            Find departments that have at least one teacher.<br /><br />
+            SELECT dept_name<br />
+            FROM dept d<br />
+            WHERE EXISTS ( SELECT 1 FROM teacher t WHERE t.dept_id = d.id);<br />
+
+            <br /><br />
+          </li>
+
+          <li>
+            FROM<br />
+            A subquery used as a table.<br />
+            Example:<br />
+            Find average marks of top 5 students.<br /><br />
+            SELECT AVG(marks) FROM (SELECT marks FROM student ORDER BY marks
+            DESC LIMIT 5) AS top5;<br />
+            The inner query creates a temporary table top5.<br />
+            <br /><br />
+          </li>
+          <li>
+            SELECT <br />
+            Useful for adding calculated fields<br /><br />
+            Example:<br />
+            Show each student name with total student count.<br />
+            SELECT name,<br />
+            (SELECT COUNT(*) FROM student) AS total_students<br />
+            FROM student;<br /><br />
+            Same count repeated for each row (useful in reports).<br />
+          </li>
+        </ul>
+
+        <br />
+        <br />
+      </li>
+    </ul>
+    <br />
+    <strong>Real-life Example — E-commerce</strong><br />
+    Find people who purchased a product before 2024.<br /><br />
+    SELECT name <br />
+    FROM customers<br />
+    WHERE id IN (<br />
+    SELECT customer_id <br />
+    FROM orders <br />
+    WHERE order_date < '2024-01-01' );
+
+    <br />
+    <br />
+
+    <strong>🔥 Real-life Example — Employee Salary</strong><br />
+    Find employees earning more than the average salary.<br /><br />
+    SELECT name, salary<br />
+    FROM employee<br />
+    WHERE salary > (SELECT AVG(salary) FROM employee);
+    <br /><br />
+
+    <br />
+    <strong>Why Use Subqueries?</strong><br />
+    ✔ When result depends on another query<br />
+    ✔ To avoid complex joins<br />
+    ✔ For calculations<br />
+    ✔ For filtering data based on another table<br />
+    ✔ To write cleaner, readable SQL<br />
+
+    <strong>🔍 When NOT to use Subqueries?</strong>
+
+    ❌ When same results can be achieved by a JOIN → JOIN is faster<br />
+    ❌ When subquery runs many times → slow performance<br />
+
     Get employees with more than 5 orders:<br />
     SELECT *<br />
     FROM employee<br />
@@ -1113,11 +1257,5 @@
     FROM order<br />
     GROUP BY employee_id<br />
     HAVING COUNT(*) > 5);
-    <br /><br />
-
-    
-
-    <br />
-    <br />
   </body>
 </html>
