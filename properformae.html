@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SQL Notes</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        padding: 20px;
+        background: #f6f6f6;
+      }
+      h1,
+      h2,
+      h3,
+      h4 {
+        color: #333;
+      }
+      strong {
+        color: #222;
+      }
+      .section {
+        background: white;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 6px;
+        box-shadow: 0 0 5px #ddd;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 15px 0;
+      }
+      table th,
+      table td {
+        border: 1px solid #ccc;
+        padding: 8px;
+      }
+      table th {
+        background: #eaeaea;
+      }
+      .highlight {
+        color: red;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- DATABASE INTRO -->
+    <section class="section">
+      <h1>Database</h1>
+      <p>
+        A database is a digital collection of organized data that can be easily
+        accessed, managed, and updated.
+      </p>
+      <p>
+        A software used to manage a database is called
+        <strong>DBMS (Database Management System)</strong>.
+      </p>
+    </section>
+
+    <!-- TYPES OF DATABASE -->
+    <section class="section">
+      <h2>Types of Databases</h2>
+
+      <h3>1. Relational Database (RDBMS)</h3>
+      <ul>
+        <li>Data stored in tables (rows & columns)</li>
+        <li>Uses relations (Primary key, Foreign key)</li>
+        <li>Uses SQL (Structured Query Language)</li>
+        <li>Examples: MySQL, Oracle, SQL Server, PostgreSQL</li>
+      </ul>
+
+      <h3>2. NoSQL Database</h3>
+      <ul>
+        <li>Non-relational (No tables)</li>
+        <li>Flexible structures: JSON, key-value, documents</li>
+        <li>Used in big data & real-time applications</li>
+        <li>Examples: MongoDB, Cassandra, CouchDB</li>
+      </ul>
+    </section>
+
+    <!-- SQL INTRO -->
+    <section class="section">
+      <h2>What is SQL?</h2>
+      <p>
+        SQL (Structured Query Language) is used to access and manipulate data in
+        relational databases.
+      </p>
+    </section>
+
+    <!-- DATA & TABLE -->
+    <section class="section">
+      <h2>What is Data?</h2>
+      <p>
+        Any information stored for later use. (Name, age, marks, prices etc.)
+      </p>
+
+      <h2>What is a Table?</h2>
+      <p>
+        A table is like an Excel sheet having rows (records) and columns
+        (fields).
+      </p>
+    </section>
+
+    <!-- SQL COMMANDS -->
+    <section class="section">
+      <h2>Common SQL Commands</h2>
+
+      <table>
+        <tr>
+          <th>Command</th>
+          <th>Use</th>
+        </tr>
+        <tr>
+          <td>CREATE</td>
+          <td>Create database or table</td>
+        </tr>
+        <tr>
+          <td>INSERT</td>
+          <td>Add new data</td>
+        </tr>
+        <tr>
+          <td>SELECT</td>
+          <td>Read data</td>
+        </tr>
+        <tr>
+          <td>UPDATE</td>
+          <td>Modify data</td>
+        </tr>
+        <tr>
+          <td>DELETE</td>
+          <td>Remove data</td>
+        </tr>
+        <tr>
+          <td>DROP</td>
+          <td>Delete table or database</td>
+        </tr>
+        <tr>
+          <td>ALTER</td>
+          <td>Modify table structure</td>
+        </tr>
+        <tr>
+          <td>TRUNCATE</td>
+          <td>Delete all data</td>
+        </tr>
+        <tr>
+          <td>VIEW</td>
+          <td>Virtual table</td>
+        </tr>
+        <tr>
+          <td>PROCEDURE</td>
+          <td>Stored block of SQL code</td>
+        </tr>
+      </table>
+    </section>
+
+    <!-- TYPES OF COMMANDS -->
+    <section class="section">
+      <h2 style="color: blue">Types of SQL Commands</h2>
+
+      <ul>
+        <li><strong>DDL</strong> – CREATE, ALTER, DROP, TRUNCATE</li>
+        <li><strong>DML</strong> – INSERT, UPDATE, DELETE</li>
+        <li><strong>DCL</strong> – GRANT, REVOKE</li>
+        <li><strong>TCL</strong> – COMMIT, ROLLBACK, SAVEPOINT</li>
+        <li><strong>DQL</strong> – SELECT</li>
+      </ul>
+    </section>
+
+    <!-- KEYS -->
+    <section class="section">
+      <h2>Primary Key</h2>
+      <p class="highlight">Uniquely identifies each row. Cannot be NULL.</p>
+
+      <h3>Composite Key Example</h3>
+      <pre>
+CREATE TABLE temp2(
+  id INT,
+  name VARCHAR(100),
+  age INT,
+  city VARCHAR(20),
+  PRIMARY KEY(id, name)
+);
+  </pre
+      >
+
+      <h2>Foreign Key</h2>
+      <p class="highlight">Links two tables. Can have duplicates or NULL.</p>
+
+      <h3>Cascading Actions</h3>
+      <table>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td>ON DELETE CASCADE</td>
+          <td>Deletes child rows when parent is deleted</td>
+        </tr>
+        <tr>
+          <td>ON DELETE SET NULL</td>
+          <td>Sets foreign key to NULL</td>
+        </tr>
+        <tr>
+          <td>ON DELETE RESTRICT</td>
+          <td>Prevents delete if child exists</td>
+        </tr>
+        <tr>
+          <td>ON UPDATE CASCADE</td>
+          <td>Updates child rows if parent key changes</td>
+        </tr>
+      </table>
+    </section>
+
+    <!-- ALTER -->
+    <section class="section">
+      <h2>ALTER Command</h2>
+      <h3>Add Column</h3>
+      <pre>ALTER TABLE employees ADD COLUMN dept VARCHAR(50);</pre>
+
+      <h3>Modify Column</h3>
+      <pre>ALTER TABLE employees MODIFY COLUMN salary DECIMAL(10,2);</pre>
+
+      <h3>Rename Column</h3>
+      <pre>
+ALTER TABLE student CHANGE age ages INT DEFAULT 10;
+  </pre
+      >
+    </section>
+
+    <!-- BASIC COMMANDS -->
+    <section class="section">
+      <h2>Basic SQL Examples</h2>
+
+      <h3>Create Database</h3>
+      <pre>
+CREATE DATABASE mydatabase;
+DROP DATABASE mydatabase;
+  </pre
+      >
+
+      <h3>Create Table</h3>
+      <pre>
+CREATE TABLE students(
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(100),
+  age INT,
+  city VARCHAR(50)
+);
+  </pre
+      >
+
+      <h3>Insert</h3>
+      <pre>
+INSERT INTO students(name,age,city)
+VALUES ("Ravi",23,"Ahmedabad");
+  </pre
+      >
+
+      <h3>Select</h3>
+      <pre>SELECT * FROM students;</pre>
+
+      <h3>Update</h3>
+      <pre>UPDATE students SET age=24 WHERE name="Ravi";</pre>
+
+      <h3>Delete</h3>
+      <pre>DELETE FROM students WHERE name="Ravi";</pre>
+    </section>
+
+    <!-- DATATYPES -->
+    <section class="section">
+      <h2>SQL Datatypes</h2>
+
+      <h3>1. Numeric Types</h3>
+      <table>
+        <tr>
+          <th>Datatype</th>
+          <th>Description</th>
+          <th>Example</th>
+        </tr>
+        <tr>
+          <td>INT</td>
+          <td>Whole number</td>
+          <td>10</td>
+        </tr>
+        <tr>
+          <td>BIGINT</td>
+          <td>Very large number</td>
+          <td>9876543210</td>
+        </tr>
+        <tr>
+          <td>DECIMAL(p,s)</td>
+          <td>Fixed point</td>
+          <td>DECIMAL(5,2)</td>
+        </tr>
+        <tr>
+          <td>FLOAT</td>
+          <td>Approximate decimal</td>
+          <td>3.14</td>
+        </tr>
+        <tr>
+          <td>DOUBLE</td>
+          <td>Double-precision</td>
+          <td>3.14159</td>
+        </tr>
+      </table>
+
+      <h3>2. String Types</h3>
+      <table>
+        <tr>
+          <th>Datatype</th>
+          <th>Description</th>
+          <th>Example</th>
+        </tr>
+        <tr>
+          <td>CHAR(n)</td>
+          <td>Fixed length</td>
+          <td>'ABC'</td>
+        </tr>
+        <tr>
+          <td>VARCHAR(n)</td>
+          <td>Variable length</td>
+          <td>'Hello'</td>
+        </tr>
+        <tr>
+          <td>TEXT</td>
+          <td>Large text</td>
+          <td>'Long message…'</td>
+        </tr>
+      </table>
+    </section>
+    <div style="font-family: Arial; line-height: 1.6">
+      <h2><strong>What Are SQL Functions?</strong></h2>
+      <p>
+        SQL functions are built-in operations that perform calculations,
+        transform data, or summarize results.
+      </p>
+      <p>They are mainly of two types:</p>
+
+      <ul>
+        <li>
+          <strong>Scalar Functions</strong> — Work on one value and return one
+          value. <br />(Examples: CONCAT, SUBSTRING, UPPER, LOWER, LENGTH,
+          ROUND, CEIL, FLOOR)
+        </li>
+        <li>
+          <strong>Aggregate Functions</strong> — Work on multiple rows and
+          return a single summary value. <br />(Examples: COUNT, SUM, AVG, MIN,
+          MAX)
+        </li>
+      </ul>
+
+      <hr />
+
+      <h3><strong>String Functions</strong></h3>
+      <table border="1" cellpadding="8" cellspacing="0">
+        <tr>
+          <th>Function</th>
+          <th>Example</th>
+          <th>Output</th>
+        </tr>
+        <tr>
+          <td>UPPER()</td>
+          <td>UPPER('bhavesh')</td>
+          <td>BHAVESH</td>
+        </tr>
+        <tr>
+          <td>LOWER()</td>
+          <td>LOWER('HELLO')</td>
+          <td>hello</td>
+        </tr>
+        <tr>
+          <td>LENGTH()</td>
+          <td>LENGTH('SQL')</td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td>CONCAT()</td>
+          <td>CONCAT('A','B')</td>
+          <td>AB</td>
+        </tr>
+        <tr>
+          <td>SUBSTRING()</td>
+          <td>SUBSTRING('Hello',1,3)</td>
+          <td>Hel</td>
+        </tr>
+      </table>
+
+      <br />
+
+      <h3><strong>Number Functions</strong></h3>
+      <table border="1" cellpadding="8" cellspacing="0">
+        <tr>
+          <th>Function</th>
+          <th>Example</th>
+          <th>Output</th>
+        </tr>
+        <tr>
+          <td>ABS()</td>
+          <td>ABS(-5)</td>
+          <td>5</td>
+        </tr>
+        <tr>
+          <td>ROUND()</td>
+          <td>ROUND(3.67)</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>CEIL()</td>
+          <td>CEIL(3.1)</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>FLOOR()</td>
+          <td>FLOOR(3.9)</td>
+          <td>3</td>
+        </tr>
+      </table>
+
+      <br />
+
+      <h3><strong>Date Functions</strong></h3>
+      <table border="1" cellpadding="8" cellspacing="0">
+        <tr>
+          <th>Function</th>
+          <th>Example</th>
+          <th>Meaning / Output</th>
+        </tr>
+        <tr>
+          <td>CURDATE()</td>
+          <td>CURDATE()</td>
+          <td>2025-11-14</td>
+        </tr>
+        <tr>
+          <td>NOW()</td>
+          <td>NOW()</td>
+          <td>2025-11-14 16:30</td>
+        </tr>
+        <tr>
+          <td>YEAR()</td>
+          <td>YEAR('2025-11-14')</td>
+          <td>2025</td>
+        </tr>
+        <tr>
+          <td>MONTH()</td>
+          <td>MONTH('2025-11-14')</td>
+          <td>11</td>
+        </tr>
+        <tr>
+          <td>DATEDIFF()</td>
+          <td>DATEDIFF('2025-11-14','2025-11-10')</td>
+          <td>4 days</td>
+        </tr>
+      </table>
+
+      <br />
+
+      <h2><strong>AGGREGATE FUNCTIONS</strong></h2>
+      <table border="1" cellpadding="8" cellspacing="0">
+        <tr>
+          <th>Function</th>
+          <th>Purpose</th>
+        </tr>
+        <tr>
+          <td>COUNT()</td>
+          <td>Count rows</td>
+        </tr>
+        <tr>
+          <td>SUM()</td>
+          <td>Add values</td>
+        </tr>
+        <tr>
+          <td>AVG()</td>
+          <td>Average value</td>
+        </tr>
+        <tr>
+          <td>MIN()</td>
+          <td>Minimum</td>
+        </tr>
+        <tr>
+          <td>MAX()</td>
+          <td>Maximum</td>
+        </tr>
+      </table>
+
+      <br />
+
+      <h3><strong>Common Aggregate Queries</strong></h3>
+      <pre>
+SELECT COUNT(*) FROM employee;
+SELECT COUNT(DISTINCT department_id) FROM employee;
+SELECT COUNT(*) FROM student WHERE dept = 'CS';
+SELECT SUM(marks) FROM student;
+SELECT AVG(marks) FROM student;
+SELECT MIN(marks) FROM student;
+SELECT MAX(marks) FROM student;
+</pre
+      >
+
+      <h3><strong>Aggregation with GROUP BY</strong></h3>
+      <pre>
+SELECT dept, COUNT(*) FROM student GROUP BY dept;
+SELECT dept, AVG(marks) FROM student GROUP BY dept;
+SELECT dept, MIN(marks) FROM student GROUP BY dept;
+SELECT dept, MAX(marks) FROM student GROUP BY dept;
+</pre
+      >
+
+      <br />
+
+      <h3><strong>Using HAVING with Aggregate Functions</strong></h3>
+      <pre>
+SELECT department, COUNT(*)
+FROM employee
+GROUP BY department
+HAVING COUNT(*) > 5;
+
+SELECT department, AVG(marks)
+FROM student
+GROUP BY department
+HAVING AVG(marks) > 85;
+</pre
+      >
+
+      <hr />
+
+      <h2 style="color: red">SQL Subqueries</h2>
+      <p>A subquery is a query inside another SQL query.</p>
+
+      <h3><strong>Types of Subqueries</strong></h3>
+      <ul>
+        <li>
+          <strong>Single-row Subquery</strong><br />
+          Returns only one value.
+          <pre>
+SELECT name, marks
+FROM student
+WHERE marks = (SELECT MAX(marks) FROM student);
+    </pre
+          >
+        </li>
+
+        <li>
+          <strong>Multi-row Subquery</strong><br />
+          Used with IN, ANY, ALL, EXISTS.
+          <pre>
+SELECT name
+FROM teacher
+WHERE department_id IN (
+    SELECT id FROM department WHERE location = 'Delhi'
+);
+    </pre
+          >
+        </li>
+
+        <li>
+          <strong>Multi-column Subquery</strong>
+          <pre>
+SELECT dept_name
+FROM department
+WHERE (min_salary, max_salary) IN (
+    SELECT min_salary, max_salary FROM company_standard
+);
+    </pre
+          >
+        </li>
+
+        <li>
+          <strong style="color: red">Nested Subquery Examples</strong>
+          <h4>1. Subquery in WHERE</h4>
+          <pre>
+SELECT dept_name
+FROM dept d
+WHERE EXISTS (SELECT 1 FROM teacher t WHERE t.dept_id = d.id);
+    </pre
+          >
+
+          <h4>2. Subquery in FROM (Derived table)</h4>
+          <pre>
+SELECT AVG(marks)
+FROM (SELECT marks FROM student ORDER BY marks DESC LIMIT 5) AS top5;
+    </pre
+          >
+
+          <h4>3. Subquery in SELECT</h4>
+          <pre>
+SELECT name,
+       (SELECT COUNT(*) FROM student) AS total_students
+FROM student;
+    </pre
+          >
+        </li>
+      </ul>
+
+      <hr />
+
+      <h2><strong>Real-Life Examples</strong></h2>
+
+      <h3>E-commerce Example</h3>
+      <pre>
+SELECT name
+FROM customers
+WHERE id IN (
+    SELECT customer_id
+    FROM orders
+    WHERE order_date < '2024-01-01'
+);
+</pre
+      >
+
+      <h3>Employee Salary Example</h3>
+      <pre>
+SELECT name, salary
+FROM employee
+WHERE salary > (SELECT AVG(salary) FROM employee);
+</pre
+      >
+
+      <hr />
+
+      <h2><strong>MySQL Views</strong></h2>
+      <p>A view is a virtual table created from a SQL SELECT query.</p>
+
+      <h3><strong>Create a View</strong></h3>
+      <pre>
+CREATE VIEW employee_public AS
+SELECT id, name, department FROM employees;
+</pre
+      >
+
+      <h3><strong>View with JOIN</strong></h3>
+      <pre>
+CREATE VIEW student_with_marks AS
+SELECT s.student_id, s.name, m.subject, m.marks
+FROM students s
+JOIN marks m ON s.student_id = m.student_id;
+</pre
+      >
+
+      <h3><strong>Update / Delete / Rename Views</strong></h3>
+      <pre>
+CREATE OR REPLACE VIEW employee_public AS 
+SELECT id, name FROM employees;
+
+DROP VIEW employee_public;
+
+RENAME TABLE employee_public TO employee_public_view;
+</pre
+      >
+
+      <hr />
+
+      <h2><strong>Stored Procedures</strong></h2>
+
+      <h3>Example 1: Insert Order & Update Stock</h3>
+      <pre>
+CREATE PROCEDURE addOrder(IN p_customer INT, IN p_product INT, IN p_qty INT)
+BEGIN
+   INSERT INTO orders(customer_id, product_id, qty)
+   VALUES (p_customer, p_product, p_qty);
+
+   UPDATE products 
+   SET stock = stock - p_qty 
+   WHERE id = p_product;
+END;
+
+CALL addOrder(1, 101, 2);
+</pre
+      >
+
+      <h3>Example 2: Money Transfer Procedure</h3>
+      <pre>
+DELIMITER //
+CREATE PROCEDURE transfer_money(
+    IN sender INT,
+    IN receiver INT,
+    IN amount DECIMAL(10,2)
+)
+BEGIN
+   IF (SELECT balance FROM accounts WHERE account_number = sender) < amount THEN
+      SIGNAL SQLSTATE '45000'
+      SET MESSAGE_TEXT = 'Insufficient Balance';
+   END IF;
+
+   UPDATE accounts SET balance = balance - amount WHERE account_number = sender;
+   UPDATE accounts SET balance = balance + amount WHERE account_number = receiver;
+
+   INSERT INTO transactions(sender, receiver, amount, created_at)
+   VALUES (sender, receiver, amount, NOW());
+END //
+DELIMITER ;
+</pre
+      >
+
+      <hr />
+
+      <h2 style="color: red"><strong>Views vs Stored Procedures</strong></h2>
+
+      <table border="1" cellpadding="8" cellspacing="0">
+        <tr>
+          <th>Feature</th>
+          <th>Explanation</th>
+        </tr>
+        <tr>
+          <td>Definition</td>
+          <td>View = virtual table<br />Procedure = program</td>
+        </tr>
+        <tr>
+          <td>Stores Data?</td>
+          <td>View ❌ No<br />Procedure ✔ Yes (logic)</td>
+        </tr>
+        <tr>
+          <td>Usage</td>
+          <td>
+            View → SELECT only<br />Procedure → SELECT/INSERT/UPDATE/DELETE
+          </td>
+        </tr>
+        <tr>
+          <td>Parameters</td>
+          <td>View ❌ No<br />Procedure ✔ Yes</td>
+        </tr>
+        <tr>
+          <td>Performance</td>
+          <td>Procedure often faster</td>
+        </tr>
+        <tr>
+          <td>Updatable?</td>
+          <td>View: sometimes<br />Procedure: always</td>
+        </tr>
+      </table>
+    </div>
+    <div style="font-family: Arial; line-height: 1.6">
+      <h3><strong>When to Use Stored Procedures</strong></h3>
+      <ul>
+        <li>You need reusable database logic</li>
+        <li>You want complex operations (not just SELECT)</li>
+        <li>You need better performance and reduced network traffic</li>
+        <li>You need input/output parameters</li>
+      </ul>
+
+      <br /><br />
+
+      <h3>
+        <strong>Key Differences Summary (Quick Notes for Interviews)</strong>
+      </h3>
+
+      <table border="1" cellpadding="8" cellspacing="0">
+        <tr>
+          <th>Views</th>
+          <th>Stored Procedures</th>
+        </tr>
+        <tr>
+          <td>Virtual table</td>
+          <td>Database program</td>
+        </tr>
+        <tr>
+          <td>Only SELECT</td>
+          <td>Can perform all SQL operations</td>
+        </tr>
+        <tr>
+          <td>No parameters</td>
+          <td>Supports parameters</td>
+        </tr>
+        <tr>
+          <td>Limited logic</td>
+          <td>Full programming logic</td>
+        </tr>
+        <tr>
+          <td>Used for data retrieval</td>
+          <td>Used for business logic</td>
+        </tr>
+        <tr>
+          <td>Not compiled</td>
+          <td>Precompiled → faster</td>
+        </tr>
+      </table>
+
+      <br /><br />
+
+      <h3><strong>When to Use What?</strong></h3>
+
+      <h4><strong>Use View when:</strong></h4>
+      <ul>
+        <li>You want a simplified SELECT query</li>
+        <li>You want to hide sensitive columns</li>
+        <li>You want consistent presentation of data</li>
+        <li>Used mostly for reporting and data filtering</li>
+      </ul>
+
+      <h4><strong>Use Stored Procedure when:</strong></h4>
+      <ul>
+        <li>Complex logic (loops, conditions)</li>
+        <li>Insert/Update/Delete operations</li>
+        <li>Repeated tasks</li>
+        <li>Improve security by hiding logic</li>
+        <li>Require parameters</li>
+      </ul>
+
+      <br />
+
+      <h3><strong>Detailed Comparison Table</strong></h3>
+
+      <table border="1" cellpadding="8" cellspacing="0">
+        <tr>
+          <th>Feature</th>
+          <th>View</th>
+          <th>Stored Procedure</th>
+        </tr>
+
+        <tr>
+          <td><strong>Type</strong></td>
+          <td>Virtual table</td>
+          <td>Stored program</td>
+        </tr>
+
+        <tr>
+          <td><strong>Stores data?</strong></td>
+          <td>❌ No</td>
+          <td>❌ No (but can modify data)</td>
+        </tr>
+
+        <tr>
+          <td><strong>Stores SQL?</strong></td>
+          <td>✔ SELECT only</td>
+          <td>✔ Multiple SQL statements</td>
+        </tr>
+
+        <tr>
+          <td><strong>Can modify data?</strong></td>
+          <td>❌ Mostly No (except updatable views)</td>
+          <td>✔ Yes (INSERT, UPDATE, DELETE)</td>
+        </tr>
+
+        <tr>
+          <td><strong>Accept parameters?</strong></td>
+          <td>❌ No</td>
+          <td>✔ Yes</td>
+        </tr>
+
+        <tr>
+          <td><strong>Usage</strong></td>
+          <td>Simplify SELECT queries</td>
+          <td>Complex logic, automation</td>
+        </tr>
+
+        <tr>
+          <td><strong>Performance</strong></td>
+          <td>Good for static queries</td>
+          <td>Excellent for repeated operations</td>
+        </tr>
+
+        <tr>
+          <td><strong>Security</strong></td>
+          <td>Hide selected columns from users</td>
+          <td>Hide entire business logic</td>
+        </tr>
+
+        <tr>
+          <td><strong>Execution</strong></td>
+          <td>Used like a table</td>
+          <td>Called using <code>CALL procedure()</code></td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>
