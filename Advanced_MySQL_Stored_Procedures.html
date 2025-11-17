@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Advanced MySQL Stored Procedures Tutorial</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #333;
+      }
+      code,
+      pre {
+        background: #222;
+        color: #0f0;
+        padding: 10px;
+        display: block;
+        border-radius: 5px;
+        white-space: pre-wrap;
+      }
+      .box {
+        background: white;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 25px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Create Stored Procedure in MySQL Workbench – Basic Steps</h2>
+
+    <ol>
+      <li>
+        <strong>Open MySQL Workbench</strong><br />
+        Start MySQL Workbench and connect to your database server.
+      </li>
+
+      <li>
+        <strong>Select Your Database (Schema)</strong><br />
+        In the left sidebar → click the schema where you want to create the
+        procedure.
+      </li>
+
+      <li>
+        <strong>Go to Stored Procedures Section</strong><br />
+        Expand the schema → expand <strong>Stored Procedures</strong>.
+      </li>
+
+      <li>
+        <strong>Click “Create Stored Procedure”</strong><br />
+        Right-click on Stored Procedures → select
+        <strong>Create Stored Procedure</strong>.
+      </li>
+
+      <li>
+        <strong>Write Your Procedure Code</strong><br />
+        Example:
+        <pre>
+CREATE PROCEDURE getStudents()
+BEGIN
+    SELECT * FROM student;
+END;
+      </pre
+        >
+      </li>
+
+      <li>
+        <strong>Execute / Apply</strong><br />
+        Click <strong>Apply</strong> → MySQL will create the stored procedure.
+      </li>
+
+      <li>
+        <strong>Run / Call the Procedure</strong><br />
+        To execute:
+        <pre>
+CALL getStudents();
+      </pre
+        >
+      </li>
+    </ol>
+
+    <h3>Optional: Adding Parameters</h3>
+
+    <pre>
+CREATE PROCEDURE getStudentById(IN sid INT)
+BEGIN
+    SELECT * FROM student WHERE id = sid;
+END;
+</pre
+    >
+
+    <p>Call it like this:</p>
+    <pre>CALL getStudentById(3);</pre>
+
+    <h1>Advanced MySQL Stored Procedures - Full Tutorial</h1>
+
+    <!-- Introduction -->
+    <div class="box">
+      <h2>What is a Stored Procedure?</h2>
+      <p>
+        A <b>Stored Procedure</b> is a saved SQL program you can run using
+        <code>CALL</code>. It supports variables, loops, conditions, parameters,
+        transactions, and more.
+      </p>
+    </div>
+
+    <!-- IN, OUT, INOUT -->
+    <div class="box">
+      <h2>1. IN, OUT, INOUT Parameters</h2>
+      <h3>IN Parameter</h3>
+      <pre>
+DELIMITER $$
+
+CREATE PROCEDURE getStudent(IN sid INT)
+BEGIN
+    SELECT * FROM student WHERE id = sid;
+END $$
+
+DELIMITER ;
+    </pre
+      >
+
+      <h3>OUT Parameter</h3>
+      <pre>
+DELIMITER $$
+
+CREATE PROCEDURE getStudentCount(OUT total INT)
+BEGIN
+    SELECT COUNT(*) INTO total FROM student;
+END $$
+
+DELIMITER ;
+    </pre
+      >
+
+      <h3>INOUT Parameter</h3>
+      <p>INOUT means value is passed in and also returned back.</p>
+
+      <pre>
+DELIMITER $$
+
+CREATE PROCEDURE increaseMarks(INOUT marks INT)
+BEGIN
+    SET marks = marks + 10;
+END $$
+
+DELIMITER ;
+    </pre
+      >
+
+      <h3>Call INOUT</h3>
+      <pre>
+SET @m = 50;
+CALL increaseMarks(@m);
+SELECT @m;    -- returns 60
+    </pre
+      >
+    </div>
+
+    <!-- Procedure using all 3 -->
+    <div class="box">
+      <h2>2. Procedure Using IN + OUT + INOUT Together</h2>
+
+      <pre>
+DELIMITER $$
+
+CREATE PROCEDURE updateStudentInfo(
+    IN sid INT,
+    IN newName VARCHAR(50),
+    INOUT marks INT,
+    OUT oldMarks INT
+)
+BEGIN
+    -- get old marks
+    SELECT marks INTO oldMarks FROM student WHERE id = sid;
+
+    -- update name
+    UPDATE student SET name = newName WHERE id = sid;
+
+    -- update marks using INOUT
+    UPDATE student SET marks = marks + marks WHERE id = sid;
+END $$
+
+DELIMITER ;
+    </pre
+      >
+
+      <h3>Call:</h3>
+      <pre>
+SET @marks = 10;
+CALL updateStudentInfo(1, 'Bhavesh', @marks, @old);
+SELECT @marks, @old;
+    </pre
+      >
+    </div>
+
+    <!-- Variables -->
+    <div class="box">
+      <h2>3. Declaring Variables</h2>
+      <pre>
+DECLARE x INT DEFAULT 0;
+DECLARE username VARCHAR(50);
+    </pre
+      >
+    </div>
+
+    <!-- IF ELSE -->
+    <div class="box">
+      <h2>4. IF / ELSEIF / ELSE</h2>
+      <pre>
+IF marks >= 90 THEN
+    SET grade = 'A';
+ELSEIF marks >= 75 THEN
+    SET grade = 'B';
+ELSE
+    SET grade = 'C';
+END IF;
+    </pre
+      >
+    </div>
+
+    <!-- CASE -->
+    <div class="box">
+      <h2>5. CASE Statement</h2>
+      <pre>
+CASE
+    WHEN marks >= 90 THEN SET grade = 'A';
+    WHEN marks >= 80 THEN SET grade = 'B';
+    ELSE SET grade = 'C';
+END CASE;
+    </pre
+      >
+    </div>
+
+    <!-- LOOP -->
+    <div class="box">
+      <h2>6. WHILE Loop Example</h2>
+      <pre>
+DELIMITER $$
+
+CREATE PROCEDURE printLoop()
+BEGIN
+    DECLARE x INT DEFAULT 1;
+
+    WHILE x <= 5 DO
+        SELECT x;
+        SET x = x + 1;
+    END WHILE;
+
+END $$
+
+DELIMITER ;
+    </pre
+      >
+    </div>
+
+    <!-- REPEAT -->
+    <div class="box">
+      <h2>7. REPEAT Loop</h2>
+      <pre>
+REPEAT
+    SET x = x + 1;
+UNTIL x > 10
+END REPEAT;
+    </pre
+      >
+    </div>
+
+    <!-- Cursor -->
+    <div class="box">
+      <h2>8. Cursors (For Row by Row Processing)</h2>
+      <p>Cursor is used to loop through query results.</p>
+
+      <pre>
+DELIMITER $$
+
+CREATE PROCEDURE listNames()
+BEGIN
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE sname VARCHAR(50);
+
+    DECLARE cur CURSOR FOR SELECT name FROM student;
+
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+    OPEN cur;
+
+    read_loop: LOOP
+        FETCH cur INTO sname;
+
+        IF done THEN
+            LEAVE read_loop;
+        END IF;
+
+        SELECT sname;
+    END LOOP;
+
+    CLOSE cur;
+
+END $$
+
+DELIMITER ;
+    </pre
+      >
+    </div>
+
+    <!-- Error handling -->
+    <div class="box">
+      <h2>9. Error Handling (DECLARE HANDLER)</h2>
+
+      <pre>
+DECLARE CONTINUE HANDLER FOR SQLEXCEPTION 
+BEGIN
+    SELECT 'Error occurred!';
+END;
+    </pre
+      >
+    </div>
+
+    <!-- Transaction -->
+    <div class="box">
+      <h2>10. Transactions in Stored Procedures</h2>
+      <pre>
+DELIMITER $$
+
+CREATE PROCEDURE transferMoney(IN fromAcc INT, IN toAcc INT, IN amt INT)
+BEGIN
+    DECLARE insufficient INT;
+
+    START TRANSACTION;
+
+    SELECT balance < amt INTO insufficient FROM bank WHERE id = fromAcc;
+
+    IF insufficient THEN
+        ROLLBACK;
+        SELECT 'Insufficient funds';
+    ELSE
+        UPDATE bank SET balance = balance - amt WHERE id = fromAcc;
+        UPDATE bank SET balance = balance + amt WHERE id = toAcc;
+        COMMIT;
+        SELECT 'Transfer Successful';
+    END IF;
+
+END $$
+
+DELIMITER ;
+    </pre
+      >
+    </div>
+
+    <!-- Real-life example -->
+    <div class="box">
+      <h2>11. Real-Life Example: Get Top N Students</h2>
+      <pre>
+DELIMITER $$
+
+CREATE PROCEDURE getTopStudents(IN n INT)
+BEGIN
+    SELECT * FROM student ORDER BY marks DESC LIMIT n;
+END $$
+
+DELIMITER ;
+    </pre
+      >
+    </div>
+
+    <!-- Drop -->
+    <div class="box">
+      <h2>12. Drop a Procedure</h2>
+      <pre>
+DROP PROCEDURE getTopStudents;
+    </pre
+      >
+    </div>
+  </body>
+</html>

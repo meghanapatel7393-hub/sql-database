@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MySQL Stored Procedures Tutorial</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        code, pre {
+            background: #222;
+            color: #0f0;
+            padding: 10px;
+            display: block;
+            border-radius: 5px;
+            white-space: pre-wrap;
+        }
+        .box {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+
+<h1>MySQL Stored Procedures - Full Tutorial</h1>
+
+<div class="box">
+    <h2>What is a Stored Procedure?</h2>
+    <p>
+        A <b>Stored Procedure</b> is a saved SQL code that you can run anytime using <code>CALL</code>.
+        It helps in reusing SQL queries and improving performance.
+    </p>
+</div>
+
+<div class="box">
+    <h2>Basic Syntax</h2>
+    <pre>
+DELIMITER $$
+
+CREATE PROCEDURE procedure_name()
+BEGIN
+    SQL statements;
+END $$
+
+DELIMITER ;
+    </pre>
+</div>
+
+<div class="box">
+    <h2>Create a Simple Procedure</h2>
+    <pre>
+DELIMITER $$
+
+CREATE PROCEDURE showStudents()
+BEGIN
+    SELECT * FROM student;
+END $$
+
+DELIMITER ;
+    </pre>
+</div>
+
+<div class="box">
+    <h2>Call the Procedure</h2>
+    <pre>
+CALL showStudents();
+    </pre>
+</div>
+
+<div class="box">
+    <h2>Procedure with IN Parameter</h2>
+    <pre>
+DELIMITER $$
+
+CREATE PROCEDURE getStudentById(IN sid INT)
+BEGIN
+    SELECT * FROM student WHERE id = sid;
+END $$
+
+DELIMITER ;
+    </pre>
+
+    <pre>CALL getStudentById(5);</pre>
+</div>
+
+<div class="box">
+    <h2>Procedure with OUT Parameter</h2>
+    <pre>
+DELIMITER $$
+
+CREATE PROCEDURE countStudents(OUT total INT)
+BEGIN
+    SELECT COUNT(*) INTO total FROM student;
+END $$
+
+DELIMITER ;
+    </pre>
+
+    <pre>
+CALL countStudents(@t);
+SELECT @t;
+    </pre>
+</div>
+
+<div class="box">
+    <h2>Procedure with Multiple Parameters</h2>
+    <pre>
+DELIMITER $$
+
+CREATE PROCEDURE addStudent(IN n VARCHAR(50), IN m INT)
+BEGIN
+    INSERT INTO student(name, marks) VALUES(n, m);
+END $$
+
+DELIMITER ;
+    </pre>
+
+    <pre>CALL addStudent('Bhavesh', 88);</pre>
+</div>
+
+<div class="box">
+    <h2>Procedure with IF / ELSE</h2>
+    <pre>
+DELIMITER $$
+
+CREATE PROCEDURE checkMarks(IN m INT)
+BEGIN
+    IF m >= 40 THEN
+        SELECT 'Pass';
+    ELSE
+        SELECT 'Fail';
+    END IF;
+END $$
+
+DELIMITER ;
+    </pre>
+
+    <pre>CALL checkMarks(35);</pre>
+</div>
+
+<div class="box">
+    <h2>Procedure with LOOP</h2>
+    <pre>
+DELIMITER $$
+
+CREATE PROCEDURE printNumbers()
+BEGIN
+    DECLARE x INT DEFAULT 1;
+
+    WHILE x <= 5 DO
+        SELECT x;
+        SET x = x + 1;
+    END WHILE;
+END $$
+
+DELIMITER ;
+    </pre>
+</div>
+
+<div class="box">
+    <h2>Update Using Stored Procedure</h2>
+    <pre>
+DELIMITER $$
+
+CREATE PROCEDURE updateMarks(IN sid INT, IN newMarks INT)
+BEGIN
+    UPDATE student 
+    SET marks = newMarks 
+    WHERE id = sid;
+END $$
+
+DELIMITER ;
+    </pre>
+
+    <pre>CALL updateMarks(3, 90);</pre>
+</div>
+
+<div class="box">
+    <h2>Delete Stored Procedure</h2>
+    <pre>
+DROP PROCEDURE showStudents;
+    </pre>
+</div>
+
+</body>
+</html>
